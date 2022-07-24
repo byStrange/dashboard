@@ -1,0 +1,69 @@
+{% extends './base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <div class="timer">
+    <div class="content">
+      <span class="time">45:00</span>
+    </div>
+  </div>
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span><span class="marked">Web</span> Programming</span>
+
+      <div class="action" id="toggleFullScreen">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M24 9h-2v-5h-7v-2h9v7zm-9 13v-2h7v-5h2v7h-9zm-15-7h2v5h7v2h-9v-7zm9-13v2h-7v5h-2v-7h9z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="quiz">
+        <div class="images">
+          <!--
+               quiz images 
+              !Warn Don't use
+                  * very huge images 
+                  * more than 3 images, maximum is 3 images
+            -->
+          <img src="//picsum.photos/200" alt="" />
+          <img src="//picsum.photos/200" alt="" />
+          <img src="//picsum.photos/200" alt="" />
+        </div>
+        <div class="question" data-id="1">
+          <span
+            >What is the difference between <span class="marked">http</span> and
+            <span class="marked">https</span>?</span
+          >
+        </div>
+        <div class="answers">
+          <div class="option">
+            <span>In Security</span>
+          </div>
+          <div class="option">
+            <span>In Design</span>
+          </div>
+          <div class="option">
+            <span>No difference</span>
+          </div>
+          <div class="option">
+            <span>None of 'em correct</span>
+          </div>
+        </div>
+        <div class="navigation">
+          <button class="button button-prev" disabled="true">Previous</button>
+          <button class="button button-prev">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block script %}
+<script src="{% static 'assets/js/select.js' %}"></script>
+{% endblock %}
