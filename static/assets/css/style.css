@@ -205,6 +205,22 @@ body {
   background: var(--light-quiz-danger-background);
 }
 
+.py-2 {
+  padding: 20px;
+}
+
+.py-1 {
+  padding: 10px;
+}
+
+.py-3 {
+  padding: 30px;
+}
+
+.py-4 {
+  padding: 40px;
+}
+
 
 @media screen and (max-width) {
     
