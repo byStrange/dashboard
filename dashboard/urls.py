@@ -18,11 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+from her.views import register_view, login_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('/my/', permanent=False), name='dashboard'),
+    path('register/', register_view, name="register"),
+    path('login/', login_view, name="login"),
     path('my/', include('her.urls', namespace="her")),
 ]
 

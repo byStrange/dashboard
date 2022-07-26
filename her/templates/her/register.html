@@ -1,0 +1,47 @@
+{% extends './base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span class="marked">Register</span>
+    </div>
+    <div class="content">
+      <form>
+        <div class="field">
+          <label class="label">Your full name</label>
+          <input type="name" name="name" placeholder="John Doe" required />
+        </div>
+        <div class="field">
+          <label class="label">Pick a new username</label>
+          <input type="name" name="username" placeholder="username" required />
+        </div>
+        <div class="field">
+          <label class="label">Your Email here</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="example@mail.com"
+            required
+          />
+        </div>
+        <div class="field">
+            <button class="button">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll("form input").forEach((input) => {
+    input.addEventListener("focus", function (e) {
+      var target = document.querySelector(".quiz-box")
+      if (!target.className.includes("focused")) {
+        target.classList.add("focused")
+      } 
+    });
+    input.addEventListener("focusout", function (e) {
+      var target = document.querySelector(".quiz-box")
+      target.classList.remove("focused")
+    });
+  });
+</script>
+{% endblock %}

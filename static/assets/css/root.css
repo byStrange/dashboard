@@ -1,28 +1,43 @@
 :root {
-    --light-body-background: linear-gradient(
-      to left,
-      rgba(0, 123, 255, 1),
-      rgba(0, 123, 255, 0.7)
-    );
-    --light-quiz-option-background: aliceblue;
-  
-    --light-quiz-option-onHover-background: #cce5ff;
-    --light-quiz-option-onHover-color: #004085;
-    --light-quiz-option-onHover-border: 1px solid #b8daff;
-  
-    --light-quiz-option-incorrect-background: #f8d7da;
-    --light-quiz-option-incorrect-color: #721c24;
-    --light-quiz-option-incorrect-border: 1px solid #f5c6cb;
-  
-    --light-quiz-option-correct-background: #d4edda;
-    --light-quiz-option-correct-color: #155724;
-    --light-quiz-option-correct-border: 1px solid #c3e6cb;
-  
-    --light-quiz-timer-warn-color: #ffcc00;
-    --light-quiz-timer-danger-color: #cc3300;
-  }
-  
-  .marked {
-    color: #1f5c9e;
-  }
-  
+  --light-body-background: linear-gradient(
+    to left,
+    rgba(0, 123, 255, 1),
+    rgba(0, 123, 255, 0.7)
+  );
+  --light-quiz-option-background: aliceblue;
+
+  --light-quiz-option-onHover-background: #cce5ff;
+  --light-quiz-option-onHover-color: #004085;
+  --light-quiz-option-onHover-border: 1px solid #b8daff;
+
+  --light-quiz-option-incorrect-background: #f8d7da;
+  --light-quiz-option-incorrect-color: #721c24;
+  --light-quiz-option-incorrect-border: 1px solid #f5c6cb;
+
+  --light-quiz-option-correct-background: #d4edda;
+  --light-quiz-option-correct-color: #155724;
+  --light-quiz-option-correct-border: 1px solid #c3e6cb;
+
+  --light-quiz-timer-warn-color: #ffcc00;
+  --light-quiz-timer-danger-color: #cc3300;
+}
+
+.marked {
+  color: #1f5c9e;
+}
+
+.py-2 {
+  padding: 20px;
+}
+
+.py-1 {
+  padding: 10px;
+}
+
+.py-3 {
+  padding: 30px;
+}
+
+.py-4 {
+  padding: 40px;
+}

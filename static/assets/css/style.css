@@ -10,6 +10,7 @@
 
 body {
   background: var(--light-body-background);
+  max-width: none !important;
 }
 
 .navbar {
@@ -43,6 +44,7 @@ body {
   overflow: hidden;
 }
 .container .quiz-box {
+  min-width: 400px;
   max-width: 800px;
   border-radius: 10px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
@@ -138,7 +140,7 @@ body {
   margin-top: 25px;
 }
 
-.quiz .navigation button {
+button.button {
   height: 40px;
   padding: 0 13px;
   font-size: 18px;
@@ -205,23 +207,47 @@ body {
   background: var(--light-quiz-danger-background);
 }
 
-.py-2 {
-  padding: 20px;
+form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px
 }
 
-.py-1 {
-  padding: 10px;
+form .field:not(:last-child) {
+  margin-bottom: 8px;
 }
 
-.py-3 {
-  padding: 30px;
+form .field label {
+  font-size: 14px;
+  color: #000;
 }
 
-.py-4 {
-  padding: 40px;
+form input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  color: #000;
+  width: 100%;
 }
 
+:focus {
+  outline: none;
+}
 
-@media screen and (max-width) {
-    
+.quiz-box.focused {
+  transform: scale(1.5) translateY(20%);
+}
+
+@media screen and (max-width: 768px) {
+  .quiz-box {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .quiz-box.focused {
+    transform: scale(1) translateY(0) !important;
+  }
+  .container {
+    margin-top: 0!important;
+  }
 }

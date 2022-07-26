@@ -13,3 +13,4 @@ options.forEach((option) => {
     this.classList.add("checked"), this.setAttribute("data-checked", true);
   };
 });
+

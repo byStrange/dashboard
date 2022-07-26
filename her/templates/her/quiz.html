@@ -2,12 +2,12 @@
 <div class="container">
   <div class="timer">
     <div class="content">
-      <span class="time">45:00</span>
+      <span class="time" id="countDown">{{ exam.count_down }}</span>
     </div>
   </div>
   <div class="quiz-box">
     <div class="quiz-title">
-      <span><span class="marked">Web</span> Programming</span>
+      <span><span class="marked">{{ exam.name }}</span>
 
       <div class="action" id="toggleFullScreen">
         <svg
@@ -31,29 +31,21 @@
                   * very huge images 
                   * more than 3 images, maximum is 3 images
             -->
-          <img src="//picsum.photos/200" alt="" />
-          <img src="//picsum.photos/200" alt="" />
-          <img src="//picsum.photos/200" alt="" />
+          {% comment %} <img src="//picsum.photos/200" alt="" /> {% endcomment %}
+          {% comment %} <img src="//picsum.photos/200" alt="" /> {% endcomment %}
+          {% comment %} <img src="//picsum.photos/200" alt="" /> {% endcomment %}
         </div>
         <div class="question" data-id="1">
           <span
-            >What is the difference between <span class="marked">http</span> and
-            <span class="marked">https</span>?</span
+            >{{ quiz.question }}</span
           >
         </div>
         <div class="answers">
+          {% for option in options %}
           <div class="option">
-            <span>In Security</span>
+            <span>{{ option.option }}</span>
           </div>
-          <div class="option">
-            <span>In Design</span>
-          </div>
-          <div class="option">
-            <span>No difference</span>
-          </div>
-          <div class="option">
-            <span>None of 'em correct</span>
-          </div>
+          {% endfor %}
         </div>
         <div class="navigation">
           <button class="button button-prev" disabled="true">Previous</button>
