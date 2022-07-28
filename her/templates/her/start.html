@@ -1,0 +1,14 @@
+{% extends './base.html' %} {% block content %}
+<div class="container magic">
+  <form class="form" action="1/" method="POST">
+    {% csrf_token %}
+    <div class="field">
+      <label for="username text-muted">Pick a cool nickname:</label>
+      <input type="text" name="username" class="magic-input" placeholder="username" />
+    </div>
+    <div>
+        <button type="submit">Enter</button>
+    </div>
+</form>
+</div>
+{% endblock %}

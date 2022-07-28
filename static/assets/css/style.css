@@ -15,7 +15,7 @@ body {
 
 .navbar {
   width: 100%;
-  height: 70px;
+  height: var(--navbar-height);
   background: var(--light-navbar-background, #fff);
   display: flex;
   padding: 0 4%;
@@ -207,28 +207,64 @@ button.button {
   background: var(--light-quiz-danger-background);
 }
 
-form .field {
+:is(form, .form) .field {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-form .field:not(:last-child) {
+:is(form, .form) .field:not(:last-child) {
   margin-bottom: 8px;
 }
 
-form .field label {
+:is(form, .form) .field label {
   font-size: 14px;
   color: #000;
 }
 
-form input {
+:is(form, .form) input {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
   font-size: 14px;
   color: #000;
   width: 100%;
+}
+
+.magic.container {
+  height: calc(100vh - var(--navbar-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0 !important;
+}
+
+.magic.container .magic-input, .magic.container [type="submit"] {
+  font-size: 25px;
+  font-weight: 500;
+  padding: 15px 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  margin-bottom: 5px;
+  transition: all 250ms;
+  color: #2b619b;
+  caret-color: #2b619b;
+}
+
+.magic.container [type="submit"] {
+  display: inline-block;
+}
+
+.magic.container label{
+  font-size: 24px;
+  color: #fff;
+}
+
+.text-muted {
+  color: #ccc;
 }
 
 :focus {

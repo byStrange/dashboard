@@ -34,8 +34,8 @@ class EditorUser(models.Model):
 
 class QuizUser(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField(help_text='Enter your email', unique=True)
-    password = models.CharField(max_length=100)
+    email = models.EmailField(help_text='Enter your email')
+    password = models.CharField(max_length=100, blank=True)
     quiz_passed = models.IntegerField(default=0)
     verified = models.BooleanField(default=False)
     passed_exams = models.ManyToManyField('Exam', blank=True)

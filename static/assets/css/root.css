@@ -20,6 +20,8 @@
 
   --light-quiz-timer-warn-color: #ffcc00;
   --light-quiz-timer-danger-color: #cc3300;
+
+  --navbar-height: 70px;
 }
 
 .marked {

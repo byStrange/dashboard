@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
-from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam
-
+from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from datetime import datetime
 # Create your views here.
 
 def welcome(request):
@@ -13,8 +15,17 @@ def welcome(request):
 
 
 def exam_quiz_view(request, slug, pk):
-    if not request.user.is_authenticated:
-        return redirect('/signup')
+    if request.method == 'POST':
+        print('requested')
+        data = request.POST
+        name = data['username']
+        user = User.objects.create_user(name, '', '')
+        quiz_user = QuizUser.objects.create(name=name, created_at=datetime.now(), updated_at=datetime.now())
+        quiz_user.save()
+        result = Result.objects.create(user=quiz_user, exam=Exam.objects.get(slug=slug), started_at=datetime.now())
+        result.save()
+        request.session['quiz_user'] = quiz_user.id
+        login(request, user)
     exam = Exam.objects.get(slug=slug)
     quiz = Quiz.objects.get(pk=pk, exam=exam)
     options = QuizOption.objects.filter(quiz=quiz)
@@ -24,13 +35,16 @@ def exam_quiz_view(request, slug, pk):
         'options': options,
         'exam': exam
     }
-
-    print(context)
+    if not request.user.is_authenticated:
+        return redirect('/my/quiz/' + slug + '/' + 'test/')
     return render(request, 'her/quiz.html', context)
 
 
 def redirect_exam_quiz(request, slug):
-    return redirect('1/')
+    if request.user.is_authenticated:
+        return redirect('1/')
+    else:
+        return render(request, 'her/start.html')
 
 def login_view(request):
     pass
