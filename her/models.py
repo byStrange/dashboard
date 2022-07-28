@@ -8,8 +8,16 @@ class Exam(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()
     count_down = models.PositiveBigIntegerField(default=0) # in minutes
+    quizzes_length = models.PositiveBigIntegerField(default=0)
+    private = models.BooleanField(default=False)    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    def set_quiz_length(self):
+        self.quizzes_length = len(Quiz.objects.filter(exam=self))
+        self.save()
+        return self.quizzes_length
 
     def __str__(self):
         return self.name
@@ -30,11 +38,23 @@ class QuizUser(models.Model):
     password = models.CharField(max_length=100)
     quiz_passed = models.IntegerField(default=0)
     verified = models.BooleanField(default=False)
+    passed_exams = models.ManyToManyField('Exam', blank=True)
+    point_score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
+
+class Result(models.Model):
+    user = models.ForeignKey(QuizUser, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+    finished_at = models.DateTimeField(auto_now_add=True)
+    started_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.name} - {self.exam.name}'
 
 class Quiz(models.Model):
     question = models.CharField(max_length=255)
@@ -53,6 +73,7 @@ class Quiz(models.Model):
 class QuizOption(models.Model):
     option = models.CharField(max_length=255)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    is_true = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -3,14 +3,17 @@
 {% block content %}
         
     <div class="container">
-        <div class="quiz-boxm">
+        <div class="quiz-box">
             <div class="quiz-title">
                 <span>Welcome to "quiz"</span>
             </div>
             <div class="quiz-box">
-                <p>Available links</p>
-                <p><a href=""></a></p>
-                
+                <div class="content">
+                <p style="margin-bottom: 5px;">Available exams</p>
+                {% for exam in exams %}
+                <a class="exam-item" href="{% url 'her:exam' exam.slug %}"><span>{{ exam.name }}</span> {{exam.quizzes_length}}</a>
+                {% endfor %}
+                </div>
             </div>
         </div>
     </div>

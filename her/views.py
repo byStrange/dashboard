@@ -4,22 +4,17 @@ from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam
 # Create your views here.
 
 def welcome(request):
-    return render(request, 'her/welcome.html')
-
-def quiz_view(request, pk):
-    quiz = Quiz.objects.get(pk=pk)
-    options = QuizOption.objects.filter(quiz=quiz)
-    print('quiz is: ', quiz)
-    print('options are: ', options)
+    exams = Exam.objects.filter(private=False)
+    [x.set_quiz_length() for x in exams]
     context = {
-        'quiz': quiz,   
-        'options': options,
+        'exams': exams,
     }
-
-    return render(request, 'her/quiz.html', context)
+    return render(request, 'her/welcome.html', context)
 
 
 def exam_quiz_view(request, slug, pk):
+    if not request.user.is_authenticated:
+        return redirect('/signup')
     exam = Exam.objects.get(slug=slug)
     quiz = Quiz.objects.get(pk=pk, exam=exam)
     options = QuizOption.objects.filter(quiz=quiz)
