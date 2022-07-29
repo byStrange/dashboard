@@ -3,7 +3,10 @@ from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, R
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from datetime import datetime
+
+SPLITTER = "_"
 # Create your views here.
+
 
 def welcome(request):
     exams = Exam.objects.filter(private=False)
@@ -16,20 +19,27 @@ def welcome(request):
 
 def exam_quiz_view(request, slug, pk):
     if request.method == 'POST':
-        print('requested')
         data = request.POST
         name = data['username']
-        user = User.objects.create_user(name, '', '')
-        quiz_user = QuizUser.objects.create(name=name, created_at=datetime.now(), updated_at=datetime.now())
+        quiz_user = QuizUser.objects.create(
+            name=name, created_at=datetime.now(), updated_at=datetime.now())
         quiz_user.save()
-        result = Result.objects.create(user=quiz_user, exam=Exam.objects.get(slug=slug), started_at=datetime.now())
+        result = Result.objects.create(user=quiz_user, exam=Exam.objects.get(
+            slug=slug), started_at=datetime.now())
         result.save()
         request.session['quiz_user'] = quiz_user.id
+        try:
+            user = User.objects.create_user(name, '', '')
+        except:
+            user = User.objects.create_user(
+                name + SPLITTER + str(quiz_user.id), '', '')
+        user.save()
         login(request, user)
+        return redirect('/my/quiz/' + slug + '/' + 'test/1/')
     exam = Exam.objects.get(slug=slug)
     quiz = Quiz.objects.get(pk=pk, exam=exam)
     options = QuizOption.objects.filter(quiz=quiz)
-    
+
     context = {
         'quiz': quiz,
         'options': options,
@@ -45,6 +55,7 @@ def redirect_exam_quiz(request, slug):
         return redirect('1/')
     else:
         return render(request, 'her/start.html')
+
 
 def login_view(request):
     pass
