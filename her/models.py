@@ -50,7 +50,7 @@ class Result(models.Model):
     user = models.ForeignKey(QuizUser, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
-    finished_at = models.DateTimeField()
+    finished_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -59,6 +59,7 @@ class Result(models.Model):
 class Quiz(models.Model):
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
+    user_answer = models.CharField(max_length=255, blank=True)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, null=True, default=None)
     species = models.ForeignKey('QuizType', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

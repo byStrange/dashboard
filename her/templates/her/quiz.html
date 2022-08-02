@@ -48,8 +48,12 @@
           {% endfor %}
         </div>
         <div class="navigation">
-          <button class="button button-prev" disabled="true">Previous</button>
-          <button class="button button-prev">Next</button>
+          {% comment %} <button class="button button-prev" disabled="true" id="prevQuiz">Previous</button> {% endcomment %}
+          {% if is_last %}
+          <button class="button button-next" id="nextQuiz">Finish</button>
+          {% else%}
+          <button class="button button-next" id="nextQuiz">Next</button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -57,5 +61,11 @@
 </div>
 
 {% endblock %} {% block script %}
+<script>
+  const exam_slug = "{{ exam.slug }}";
+  const question_id = {{ quiz.id }};
+  const csrf_token = "{{ csrf_token }}";
+</script>
+<script src="{% static 'assets/js/post.js' %}"></script>
 <script src="{% static 'assets/js/select.js' %}"></script>
 {% endblock %}

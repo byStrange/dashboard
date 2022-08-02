@@ -1,0 +1,34 @@
+{% extends './base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      Dear <span class="marked">{{result.user.name}}</span>
+    </div>
+    <div class="result-content">
+      <div class="result-row" data-count="{{ exam.quizzes_length }}">
+        <div class="side side-success">
+          <span> {{ result.score }} </span>
+          <span class="text-muted">Correct</span>
+        </div>
+        <div class="side side-danger">
+          <span> {{ exam.quizzes_length }} </span>
+          <span class="text-muted">Incorrect</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="quiz-box">
+    <div class="content">
+      <span class="text-success">{{ exam.name }}</span>
+      <ul>
+        {% for quiz in quizzes %}
+
+        <li class="answer">{{quiz.question}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{%endblock %}
