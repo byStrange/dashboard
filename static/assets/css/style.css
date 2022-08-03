@@ -224,7 +224,7 @@ button.button {
   color: #000;
 }
 
-:is(form, .form) input {
+:is(form, .form) input:not([type="checkbox"]), textarea, select {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;

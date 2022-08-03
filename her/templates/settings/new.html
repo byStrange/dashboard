@@ -1,0 +1,54 @@
+{% extends 'her/base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="quiz-box">
+      <div class="quiz-title">
+        Create <span class="marked">Exam</span>
+      </div>
+      <div class="content">
+        <form>
+          <div class="field">
+            <label class="label" for="exam_name">Exam title</label>
+            <input type="name" name="exam_name" placeholder="Your exam's title" id="exam_name" required />
+          </div>
+          <div class="field">
+            <label class="label">Exam description</label>
+            <textarea name="exam_desc" placeholder="Your exam's description" required></textarea>
+          </div>
+          <div class="field">
+            <label class="label">Exam time (in minutes)</label>
+            <input
+              type="number"
+              name="exam_limit"
+              placeholder="Duration of your exam"
+              required
+            />
+          </div>
+          <div class="field" style="flex-direction: row;">
+            <label for="is_private">Private</label>
+            <input type="checkbox" name="is_private" id="">
+          </div>
+          <div class="field">
+              <button class="button">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll(":is(form) input, textarea, select").forEach((input) => {
+      input.addEventListener("focus", function (e) {
+        var target = document.querySelector(".quiz-box")
+        if (!target.className.includes("focused")) {
+          target.classList.add("focused")
+        } 
+      });
+      input.addEventListener("focusout", function (e) {
+        var target = document.querySelector(".quiz-box")
+        target.classList.remove("focused")
+      });
+    });
+  </script>
+{% endblock %}
