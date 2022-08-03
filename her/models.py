@@ -3,16 +3,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Exam(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()
-    count_down = models.PositiveBigIntegerField(default=0) # in minutes
+    count_down = models.PositiveBigIntegerField(default=0)  # in minutes
     quizzes_length = models.PositiveBigIntegerField(default=0)
-    private = models.BooleanField(default=False)    
+    private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
     def set_quiz_length(self):
         self.quizzes_length = len(Quiz.objects.filter(exam=self))
@@ -23,14 +23,14 @@ class Exam(models.Model):
         return self.name
 
 
-
 class EditorUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     quiz_created = models.IntegerField(default=0)
     quizzes = models.ManyToManyField('Quiz', blank=True)
-    
+
     def __str__(self):
         return self.user.username if self.user.username else self.user.first_name
+
 
 class QuizUser(models.Model):
     name = models.CharField(max_length=100)
@@ -42,6 +42,7 @@ class QuizUser(models.Model):
     point_score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
 
@@ -56,11 +57,24 @@ class Result(models.Model):
     def __str__(self):
         return f'{self.user.name} - {self.exam.name}'
 
+
+class UserAnswer(models.Model):
+    user = models.ForeignKey(QuizUser, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.answer
+
+
 class Quiz(models.Model):
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
-    user_answer = models.CharField(max_length=255, blank=True)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, null=True, default=None)
+    user_answer = models.ManyToManyField(
+        UserAnswer, blank=True, null=True)
+    exam = models.ForeignKey(
+        Exam, on_delete=models.CASCADE, null=True, default=None)
     species = models.ForeignKey('QuizType', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -70,6 +84,7 @@ class Quiz(models.Model):
 
     class Meta:
         verbose_name_plural = "Quizes"
+
 
 class QuizOption(models.Model):
     option = models.CharField(max_length=255)

@@ -11,7 +11,7 @@
           <span class="text-muted">Correct</span>
         </div>
         <div class="side side-danger">
-          <span> {{ exam.quizzes_length }} </span>
+          <span> {{ f }} </span>
           <span class="text-muted">Incorrect</span>
         </div>
       </div>
@@ -22,10 +22,13 @@
   <div class="quiz-box">
     <div class="content">
       <span class="text-success">{{ exam.name }}</span>
-      <ul>
+      <ul class="answers">
         {% for quiz in quizzes %}
-
-        <li class="answer">{{quiz.question}}</li>
+        <li data-answer="{{quiz.answer}}"
+          class="option {%for i in quiz.user_answer.all %}{%if result.user.id == i.user.id %}{% if i.answer == quiz.answer %}correct{% else %}incorrect{%endif%}{%endif%}{% endfor%}"
+        >
+          {{quiz.question}}
+        </li>
         {% endfor %}
       </ul>
     </div>

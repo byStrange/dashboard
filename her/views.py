@@ -1,6 +1,8 @@
+from site import USER_BASE
+from turtle import pen
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result
+from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result, UserAnswer
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -70,7 +72,11 @@ def exam_quiz_check(request, slug, pk):
             user=quiz_user, exam=Exam.objects.get(slug=slug))
         result.quiz = quiz
         result.save()
-        quiz.user_answer = user_answer
+        useranswer = UserAnswer.objects.create(
+            user=quiz_user, answer=user_answer)
+        useranswer.save()
+        print('user', useranswer)
+        quiz.user_answer.add(useranswer)
         result.score += 1 if quiz.answer == user_answer else 0
         result.save()
         try:
@@ -97,10 +103,14 @@ def exam_result(request, slug):
     result = Result.objects.get(user=QuizUser.objects.get(
         id=request.session['quiz_user']), exam=exam)
     quizzes = Quiz.objects.filter(exam=exam)
+    f = exam.quizzes_length - result.score
+    if f < 0:
+        f = 0
     context = {
         'exam': exam,
         'result': result,
-        'quizzes': quizzes
+        'quizzes': quizzes,
+        'f': f
     }
     return render(request, 'her/result.html', context)
 

@@ -339,7 +339,6 @@ button.button {
   background-color: #dc3545;
 }
 
-
 @media screen and (max-width: 768px) {
   .quiz-box {
     min-width: 95% !important;
