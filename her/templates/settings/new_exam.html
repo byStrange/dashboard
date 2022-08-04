@@ -8,7 +8,8 @@
         Create <span class="marked">Exam</span>
       </div>
       <div class="content">
-        <form>
+        <form method="POST">
+          {% csrf_token %}
           <div class="field">
             <label class="label" for="exam_name">Exam title</label>
             <input type="name" name="exam_name" placeholder="Your exam's title" id="exam_name" required />
@@ -28,7 +29,7 @@
           </div>
           <div class="field" style="flex-direction: row;">
             <label for="is_private">Private</label>
-            <input type="checkbox" name="is_private" id="">
+            <input type="checkbox" name="is_private" id="is_private">
           </div>
           <div class="field">
               <button class="button">Create</button>

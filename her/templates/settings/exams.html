@@ -1,0 +1,25 @@
+{% extends 'her/base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span class="marked">Exams</span>
+    </div>
+    <div class="content">
+      <div class="answers">
+        {% for exam in exams %}
+        <a href="{% url 'edit:exam' exam.id %}">
+            <div class="option">
+                <span>{{ exam.name }}</span>
+            </div>
+        </a>
+        {% endfor %}
+      </div>
+      <div class="mt-2">
+        <a href="{% url 'edit:add_exam' %}">
+            <button class="button">Create Exam</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

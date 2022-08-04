@@ -1,0 +1,20 @@
+{% extends 'her/base.html' %} {% block content %}
+    <div class="container">
+        <div class="quiz-box">
+            <div class="quiz-title">
+                <span>All <span class="marked">Quiz</span> users</span>
+            </div>
+            <div class="content">
+                <div class="answers">
+                    {% for quiz_user in quiz_users %}
+                        <a href="{% url 'edit:quiz_user_detail' quiz_user.id %}" style="text-decoration: none; color: initial" class="quiz-user">
+                            <div class="option" data-id="{{quiz_user.id}}">
+                                <span>{{ quiz_user.name }}</span>
+                            </div>
+                        </a>                   
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

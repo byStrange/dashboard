@@ -1,7 +1,11 @@
+from re import L
+import re
 from site import USER_BASE
 from turtle import pen
+from unittest import removeResult
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from edit.views import quiz_users
 from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result, UserAnswer
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -62,14 +66,15 @@ def exam_quiz_view(request, slug, pk):
 
 
 def exam_quiz_check(request, slug, pk):
-    if request.method == 'GET':
+    quiz_user = QuizUser.objects.get(pk=request.session['quiz_user'])
+    exam = Exam.objects.get(slug=slug)
+    quiz = Quiz.objects.get(pk=pk, exam=exam)
+    result = Result.objects.get(
+        user=quiz_user, exam=Exam.objects.get(slug=slug))
+    if request.method == 'GET' and loads(request.GET.get("data")).get("answer"):
         data = request.GET
         data = loads(data.get("data"))
         user_answer = data['answer']
-        quiz_user = QuizUser.objects.get(pk=request.session['quiz_user'])
-        quiz = Quiz.objects.get(pk=pk, exam=Exam.objects.get(slug=slug))
-        result = Result.objects.get(
-            user=quiz_user, exam=Exam.objects.get(slug=slug))
         result.quiz = quiz
         result.save()
         useranswer = UserAnswer.objects.create(
@@ -87,18 +92,37 @@ def exam_quiz_check(request, slug, pk):
         if next_quiz:
             return JsonResponse({"next_quiz_url": '/my/quiz/' + slug + '/' + 'test/' + str(next_quiz.id) + '/', "next_quiz_id": next_quiz.id, 'quiz_user': quiz_user.name})
         else:
+            quiz_user.quiz_passed += 1
+            quiz_user.passed_exams.add(exam)
+            quiz_user.save()
             return JsonResponse({"exam_result_url": '/my/quiz/' + slug + '/' + 'result/', "quiz_user": request.user.username})
+
+    result.score = 0
+    result.save()
+    print(result.score)
     return redirect('/my/quiz/' + slug + '/' + 'test/1/')
 
 
 def redirect_exam_quiz(request, slug):
     if request.user.is_authenticated:
+
+        quiz_user = QuizUser.objects.get(pk=request.session['quiz_user'])
+        result = Result.objects.get(
+            user=quiz_user, exam=Exam.objects.get(slug=slug))
+        result.score = 0
+        quizzes = Quiz.objects.filter(exam=Exam.objects.get(slug=slug))
+        for quiz in quizzes.all():
+            for answer in quiz.user_answer.all():
+                if answer.user.id == quiz_user.id:
+                    answer.delete()
+        result.save()
         return redirect('1/')
     else:
         return render(request, 'her/start.html')
 
 
 def exam_result(request, slug):
+    print(QuizUser.objects.get(id=request.session['quiz_user']).passed_exams.all())
     exam = Exam.objects.get(slug=slug)
     result = Result.objects.get(user=QuizUser.objects.get(
         id=request.session['quiz_user']), exam=exam)
