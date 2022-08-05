@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from her.models import *
+import json
 # Create your views here.
 
 
@@ -46,7 +47,12 @@ def quiz_users(request):
     else:
         return FALSE(request)
 
-def add_quiz(re)
+def add_quiz(request, pk):
+    if request.method == "POST":
+        data = json.load(request)['hello']
+        print(data)
+        return JsonResponse({"ok": True, 'status': 'OK'})
+    return render(request, 'settings/new_quiz.html', {'exam': Exam.objects.get(pk=pk)})
 
 
 def add_exam(request):

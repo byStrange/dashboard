@@ -1,25 +1,24 @@
-{% extends 'her/base.html' %}
-
-    
-    {% block content %}
-        <div class="container">
-            <div class="quiz-box">
-                <div class="quiz-title">
-                    <span>{{ exam.name }}</span>
-                </div>
-                <div class="content">
-                    <p>{{ exam.description }}</p>
-                    <div class="answers">
-                        {% for quiz in quizzes %}
-                        <div class="option">
-                            <span>{{ quiz.question }}</span>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="add mt-2">
-                        <button class="button button-danger">Add</button>
-                    </div>
-                </div>
-            </div>
+{% extends 'her/base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>{{ exam.name }}</span>
+    </div>
+    <div class="content">
+      <p>{{ exam.description }}</p>
+      <div class="answers">
+        {% for quiz in quizzes %}
+        <div class="option">
+          <span>{{ quiz.question }}</span>
         </div>
-    {% endblock %}
+        {% endfor %}
+      </div>
+      <a href="{% url 'edit:add_quiz' exam.id  %}"
+        ><div class="add mt-2">
+          <button class="button button-danger">Add</button>
+        </div></a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}
