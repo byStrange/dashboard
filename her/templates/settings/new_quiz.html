@@ -1,22 +1,46 @@
-{% extends 'her/base.html' %} {% block content %} 
-    {% csrf_token %}
-    <script>
-        const URL = '{% url "edit:add_quiz" exam.id %}'
-        const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
-        fetch(URL, {
-            method: "POST",
-            credintials: "same-origin",
-            headers: {
-                'Accept': 'application/json',
-                "Content-Type": "application/json",
-                'X-Requested-With': 'XMLHttpRequest',
-                "X-CSRFToken": csrf_token
-            },
-            body: JSON.stringify({'hello': 'world'}),
-        }).then(response => response.json()).then(data => {
-            console.log(data)
-        }).catch(error => {
-            console.error(error)
-        })
-    </script>
+{% extends 'her/base.html' %} {% block content %} {% csrf_token %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>Add Quiz to <span class="marked">{{ exam.name }}</span></span>
+    </div>
+    <div class="content">
+      <div class="answers">
+        <div class="field">
+          <label for="question">Question for your quiz</label>
+          <input
+            type="text"
+            id="question"
+            class="option option-input mt"
+            name="question"
+            placeholder="Question"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const URL = '{% url "edit:add_quiz" exam.id %}';
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  const default_headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRFToken": csrf_token,
+  };
+  fetch(URL, {
+    method: "POST",
+    credintials: "same-origin",
+    headers: default_headers,
+    body: JSON.stringify({ hello: "world" }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+</script>
 {% endblock %}

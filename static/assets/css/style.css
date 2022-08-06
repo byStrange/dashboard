@@ -154,6 +154,10 @@ body {
   gap: 20px;
 }
 
+.option-input {
+  cursor: text;
+}
+
 .quiz-box .answers .option {
   background: aliceblue;
   border: 1px solid #84c5fe;
