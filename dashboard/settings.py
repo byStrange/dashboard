@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hutbwyd&72kf$ci10o48eyzn4^o245c3ct+q3*h-^ai9elwa6@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.6", "localhost", ""]
+ALLOWED_HOSTS = ["bystrange.pythonanywhere.com", 'http://bystrange.pythonanywhere.com']
 
 
 # Application definition
@@ -120,9 +120,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    str(BASE_DIR / 'static'),
-]
+STATIC_ROOT = '/home/byStrange/dashboard/static'
 
 MEDIA_URL = '/media/'
 
