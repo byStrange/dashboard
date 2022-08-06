@@ -1,4 +1,4 @@
-{% extends 'her/base.html' %} {% block content %}
+{% extends 'her/base.html' %} {% block content %} {% csrf_token %}
 <div class="container">
   <div class="quiz-box">
     <div class="quiz-title">
@@ -8,7 +8,7 @@
       <p>{{ exam.description }}</p>
       <div class="answers">
         {% for quiz in quizzes %}
-        <div class="option">
+        <div class="option" data-quiz-id="{{quiz.id}}">
           <span>{{ quiz.question }}</span>
         </div>
         {% endfor %}
@@ -21,4 +21,30 @@
     </div>
   </div>
 </div>
+<script>
+  var csrf_token = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+  var default_headers = {
+    'X-CSRFToken': csrf_token,
+    'Content-Type': 'application/json'
+  };
+  function deleteQuiz(id) {
+    var headers = Object.assign({}, default_headers);
+    headers['X-METHOD'] = 'DELETE';
+    fetch("/settings/" + 'delete/quiz/' + id + '/', {
+      method: 'POST',
+      headers: headers
+    }).then(function(response) {
+      if(response.ok) {
+        document.querySelector('[data-quiz-id="' + id + '"]').remove();
+      }
+    });
+  }
+  document.querySelectorAll('.answers .option').forEach(function(option) {
+    option.addEventListener('dblclick', function() {
+      var id = option.getAttribute('data-quiz-id');
+      deleteQuiz(id);
+    });
+  }
+  );
+</script>
 {% endblock %}

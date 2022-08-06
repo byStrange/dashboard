@@ -28,6 +28,10 @@
   color: #1f5c9e;
 }
 
+.mt {
+  margin-top: 10px;
+}
+
 .mt-1 {
   margin-top: 1rem;
 }

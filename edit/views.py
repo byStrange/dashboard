@@ -18,6 +18,16 @@ def quiz_user_detail(request, pk):
     else:
         return FALSE(request)
 
+def delete_quiz(request, quiz_id):
+    if is_staff(request):
+        quiz = Quiz.objects.get(pk=quiz_id)
+        options = QuizOption.objects.filter(quiz=quiz)
+        for option in options:
+            option.delete()
+        quiz.delete()
+        return JsonResponse({"ok": True, 'status': 'OK'})
+    else:
+        return FALSE(request)
 
 def exams(request):
     if is_staff(request):
@@ -49,8 +59,18 @@ def quiz_users(request):
 
 def add_quiz(request, pk):
     if request.method == "POST":
-        data = json.load(request)['hello']
-        print(data)
+        default_quiz_type = QuizType.objects.get(name="test")
+        data = json.load(request)['data']
+        question = data['question']
+        answers = data['answers']
+        correct = data['correct']
+        exam = Exam.objects.get(pk=pk)
+        quiz = Quiz.objects.create(question=question, exam=exam, answer=correct[0], species=default_quiz_type)
+        for answer in answers:
+            QuizOption.objects.create(quiz=quiz, option=answer, is_true=True if answer == correct[0] else False).save()
+        quiz.save()
+        print('Quiz',  quiz.id, 'created')
+        print("successfully ", quiz.question, ' created')
         return JsonResponse({"ok": True, 'status': 'OK'})
     return render(request, 'settings/new_quiz.html', {'exam': Exam.objects.get(pk=pk)})
 

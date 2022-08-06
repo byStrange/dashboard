@@ -44,11 +44,12 @@ def exam_quiz_view(request, slug, pk):
                 name + SPLITTER + str(quiz_user.id), '', '')
         user.save()
         login(request, user)
-        return redirect('/my/quiz/' + slug + '/' + 'test/1/')
+        return redirect('/my/quiz/' + slug + '/' + 'test/')
     is_last = False
     exam = Exam.objects.get(slug=slug)
     quiz = Quiz.objects.get(pk=pk, exam=exam)
     options = QuizOption.objects.filter(quiz=quiz)
+    print(options)
     last_quiz = Quiz.objects.filter(
         exam=Exam.objects.get(slug=slug)).order_by('-id')[0]
 
@@ -84,9 +85,19 @@ def exam_quiz_check(request, slug, pk):
         quiz.user_answer.add(useranswer)
         result.score += 1 if quiz.answer == user_answer else 0
         result.save()
+        exam_quizzes = Quiz.objects.filter(exam=exam)
+        # if quiz.id == exam_quizzes.order_by('-id')[0].id:
+        #     result.passed_exams.add(exam)
+        #     result.save()
+        #     return JsonResponse({'status': 'passed'})
+        current = exam_quizzes.get(id=pk)
+        all_ids = []
+        for x in exam_quizzes:
+            all_ids.append(x.id)
+        
         try:
-            next_quiz = Quiz.objects.get(
-                id=pk + 1, exam=Exam.objects.get(slug=slug))
+            next_id = all_ids[all_ids.index(current.id) + 1]
+            next_quiz = Quiz.objects.get(id=next_id)
         except:
             next_quiz = None
         if next_quiz:
@@ -116,8 +127,9 @@ def redirect_exam_quiz(request, slug):
                 if answer.user.id == quiz_user.id:
                     answer.delete()
         result.save()
-        return redirect('1/')
-    else:
+        first_quiz_id = Quiz.objects.filter(exam=Exam.objects.get(slug=slug)).first().id
+        return redirect(str(first_quiz_id) + '/')
+    else: 
         return render(request, 'her/start.html')
 
 

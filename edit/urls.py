@@ -10,5 +10,6 @@ urlpatterns = [
     path("exams/", views.exams, name="exams"),
     path("exams/<int:pk>/", views.exam, name="exam"),
     path('exams/<int:pk>/add/', views.add_quiz, name="add_quiz"),
+    path('delete/quiz/<int:quiz_id>/', views.delete_quiz, name="delete_quiz"),
     path('exams/add/', views.add_exam, name="add_exam"),
 ]
