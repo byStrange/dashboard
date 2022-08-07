@@ -16,9 +16,11 @@
         </a>
       </div>
       <div class="action">
+        {% if request.user.is_authenticated %}
         <div class="logout">
-          <a href="#">Logout</a>
+          <a href="/logout">Logout</a>
         </div>
+        {% endif %}
       </div>
     </div>
     {% block content %}

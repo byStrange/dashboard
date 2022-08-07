@@ -19,7 +19,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
 from her.views import register_view, login_view
+from django.contrib.auth import logout
 
+def user_logout(request):
+    logout(request)
+    return redirect('/my/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +31,8 @@ urlpatterns = [
     path('register/', register_view, name="register"),
     path('login/', login_view, name="login"),
     path('my/', include('her.urls', namespace="her")),
-    path("settings/", include("edit.urls", namespace="edit"))
+    path("settings/", include("edit.urls", namespace="edit")),
+    path('/logout', user_logout, name="logout")
 ]
 
 

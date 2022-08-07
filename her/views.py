@@ -11,7 +11,10 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from datetime import datetime
 from json import load, loads
-
+import requests
+from .config import CHAT_ID, BOT_TOKEN
+CHAT_ID = str(CHAT_ID)
+BOT_TOKEN = str(BOT_TOKEN)
 
 SPLITTER = "_"
 # Create your views here.
@@ -94,7 +97,7 @@ def exam_quiz_check(request, slug, pk):
         all_ids = []
         for x in exam_quizzes:
             all_ids.append(x.id)
-        
+
         try:
             next_id = all_ids[all_ids.index(current.id) + 1]
             next_quiz = Quiz.objects.get(id=next_id)
@@ -106,6 +109,11 @@ def exam_quiz_check(request, slug, pk):
             quiz_user.quiz_passed += 1
             quiz_user.passed_exams.add(exam)
             quiz_user.save()
+            # send message to telegram with api.telegram.org
+            # message text should be like this: User {name} passed exam {exam} with score {score} out of {quizzes_length}
+            message = 'User "' + quiz_user.name + '" passed exam "' + exam.name + '" with score ' + str(result.score) + ' out of ' + str(exam.quizzes_length) + '" at "' + datetime.now().strftime("%d/%m/%Y %H:%M") + '"'
+            url = 'https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage?chat_id=' + CHAT_ID + '&text=' + message
+            requests.get(url)
             return JsonResponse({"exam_result_url": '/my/quiz/' + slug + '/' + 'result/', "quiz_user": request.user.username})
 
     result.score = 0
@@ -116,7 +124,12 @@ def exam_quiz_check(request, slug, pk):
 
 def redirect_exam_quiz(request, slug):
     if request.user.is_authenticated:
-
+        url = 'https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage?chat_id=' + CHAT_ID + '&text=User "' + request.user.username + '" started exam "' + Exam.objects.get(slug=slug).name + '" at "' + datetime.now().strftime("%d/%m/%Y %H:%M") + '"'
+        a=requests.get(url)
+        print(url)
+        print(a)
+        if a.status_code == 200:
+            print('ok')
         quiz_user = QuizUser.objects.get(pk=request.session['quiz_user'])
         result = Result.objects.get(
             user=quiz_user, exam=Exam.objects.get(slug=slug))
@@ -127,14 +140,16 @@ def redirect_exam_quiz(request, slug):
                 if answer.user.id == quiz_user.id:
                     answer.delete()
         result.save()
-        first_quiz_id = Quiz.objects.filter(exam=Exam.objects.get(slug=slug)).first().id
+        first_quiz_id = Quiz.objects.filter(
+            exam=Exam.objects.get(slug=slug)).first().id
         return redirect(str(first_quiz_id) + '/')
-    else: 
+    else:
         return render(request, 'her/start.html')
 
 
 def exam_result(request, slug):
-    print(QuizUser.objects.get(id=request.session['quiz_user']).passed_exams.all())
+    print(QuizUser.objects.get(
+        id=request.session['quiz_user']).passed_exams.all())
     exam = Exam.objects.get(slug=slug)
     result = Result.objects.get(user=QuizUser.objects.get(
         id=request.session['quiz_user']), exam=exam)
