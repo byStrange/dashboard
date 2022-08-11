@@ -27,19 +27,19 @@
               required
             />
           </div>
-          <div class="field" style="flex-direction: row;">
-            <label for="is_private">Private</label>
+          <div class="field" style="flex-direction: row">
+            <label class="label" for="is_private">Private</label>
             <input type="checkbox" name="is_private" id="is_private">
           </div>
           <div class="field">
-              <button class="button">Create</button>
+              <button class="button" type="submit">Create</button>
           </div>
         </form>
       </div>
     </div>
   </div>
   <script>
-    document.querySelectorAll(":is(form) input, textarea, select").forEach((input) => {
+    document.querySelectorAll(":is(form) input, textarea, select, button").forEach((input) => {
       input.addEventListener("focus", function (e) {
         var target = document.querySelector(".quiz-box")
         if (!target.className.includes("focused")) {

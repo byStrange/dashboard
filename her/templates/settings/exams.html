@@ -7,7 +7,7 @@
     <div class="content">
       <div class="answers">
         {% for exam in exams %}
-        <a href="{% url 'edit:exam' exam.id %}">
+        <a href="{% url 'edit:exam' exam.slug %}">
             <div class="option">
                 <span>{{ exam.name }}</span>
             </div>

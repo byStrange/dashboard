@@ -1,0 +1,142 @@
+{% extends './base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>{{ quiz.title }}</span>
+    </div>
+    <div class="content">
+      <div class="answers add-quiz">
+        <div class="field">
+          <input
+            type="text"
+            id="question"
+            class="option option-input"
+            name="question"
+            placeholder="Question"
+            style="width: 100%"
+            tabindex="1"
+            value="{{ quiz.question }}"
+          />
+        </div>
+        <div class="options">
+          {% for option in options %}
+          <div class="field">
+            <div class="option _">
+              <div>
+                <input type="radio" name="answer" id="answer" />
+              </div>
+              <div>
+                <input
+                  name="option"
+                  id="option"
+                  data-sent="false"
+                  placeholder="option"
+                  tabindex="2"
+                  value="{{ option.option }}"
+                />
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="field" style="display: flex">
+          <button class="button button-outline" style="width: 100%" id="add">
+            <span>+</span>
+          </button>
+        </div>
+        <div class="field">
+          <button class="button" id="send">
+            <span>create</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const URL = '{% url "edit:add_quiz" exam.slug %}';
+  const addButtton = document.querySelector("#add");
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  const sendButton = document.querySelector("#send");
+  const default_headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRFToken": csrf_token,
+  };
+
+  addButtton.onclick = add;
+  window.onkeyup = function (e) {
+    if (e.ctrlKey && e.keyCode == 13) {
+      add();
+    }
+  };
+  function add() {
+    var container = document.querySelector(".options");
+    var tabindex = container.querySelectorAll(".option").length + 2;
+    var template = `
+            <div class="option _">
+              <div>
+                <input type="radio" name="answer" id="answer" />
+              </div>
+              <div>
+                <input
+                  name="option"
+                  id="option"
+                  data-sent="false"
+                  placeholder="option"
+                  tabindex="${tabindex}"
+                />
+              </div>
+            </div>
+         `;
+    var field = document.createElement("div");
+    field.className = "field mt";
+    field.innerHTML = template;
+    container.appendChild(field);
+  }
+
+  sendButton.onclick = function () {
+    var question = document.querySelector("#question").value;
+    var options = document.querySelectorAll(".option._");
+    var answers = [];
+    var correct = [];
+    options.forEach(function (option) {
+      var answer = option.querySelector("#answer").checked;
+      var option = option.querySelector("#option").value;
+      if (answer) {
+        correct.push(option);
+      }
+      answers.push(option);
+    });
+    var data = {
+      data: {
+        question: question,
+        answers: answers,
+        correct: correct,
+      },
+    };
+    if (
+      data.data.question &&
+      data.data.answers.length > 0 &&
+      data.data.correct.length > 0
+    ) {
+      fetch(URL, {
+        method: "POST",
+        headers: default_headers,
+        body: JSON.stringify(data),
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.ok) {
+            location.reload();
+          }
+        });
+    } else {
+      alert("Please fill all fields");
+    }
+  };
+</script>
+{% endblock %}

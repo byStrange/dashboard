@@ -24,13 +24,17 @@
       <span class="text-success">{{ exam.name }}</span>
       <ul class="answers">
         {% for quiz in quizzes %}
-        <li data-answer="{{quiz.answer}}"
+        <li
+          data-answer="{{quiz.answer}}"
           class="option {%for i in quiz.user_answer.all %}{%if result.user.id == i.user.id %}{% if i.answer == quiz.answer %}correct{% else %}incorrect{%endif%}{%endif%}{% endfor%}"
         >
           {{quiz.question}}
         </li>
         {% endfor %}
       </ul>
+      <a href="{% url 'her:exam' exam.slug %}"> 
+        <button class="button mt">Retry</button>
+      </a>
     </div>
   </div>
 </div>

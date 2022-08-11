@@ -1,35 +1,36 @@
-{% extends 'her/base.html' %}
-
-    
-    {% block content %} 
-        <div class="container">
-            <div class="quiz-box">
-                <div class="quiz-title">
-                    <span>{{quiz_user.name}}</span>
-                </div>
-                <div class="content">
-                    <div class="answers" style="margin-bottom: 10px;">
-                        <div class="option for-data" data-for="email">
-                            <span>{{quiz_user.email}}</span>
-                        </div>
-                        
-                        <div class="option for-data" data-for="exams">
-                            {% for passed in quiz_user.passed_exams.all %} 
-                            <a href="{% url 'her:exam' passed.slug %}"><span>{{passed.name}}</span></a>
-                            {% endfor %}
-                        </div>
-
-                        <div class="option for-data" data-for="score">
-                            <span>{{quiz_user.point_score}}</span>
-                        </div>
-
-                        {% comment %} verified {% endcomment %}
-                        <div class="option for-data" data-for="verified">
-                            <span>{{quiz_user.verified}}</span>
-                        </div>
-                    </div>
-                    <span style="text-align: left">Joined at {{ quiz_user.created_at|date }}</span> 
-                </div>
-            </div>
+{% extends 'her/base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>{{quiz_user.name}}</span>
+    </div>
+    <div class="content">
+      <div class="answers" style="margin-bottom: 10px">
+        <div class="option for-data" data-for="email">
+          <span>{{quiz_user.email}}</span>
         </div>
-    {% endblock %}
+
+        <div class="option for-data" data-for="exams">
+          {% for passed in quiz_user.passed_exams.all %}
+          <a href="{% url 'her:exam' passed.slug %}"
+            ><span>{{passed.name}}</span></a
+          >
+          {% endfor %}
+        </div>
+
+        <div class="option for-data" data-for="score">
+          <span>{{quiz_user.point_score}}</span>
+        </div>
+
+        {% comment %} verified {% endcomment %}
+        <div class="option for-data" data-for="verified">
+          <span>{{quiz_user.verified}}</span>
+        </div>
+      </div>
+      <span style="text-align: left"
+        >Joined at {{ quiz_user.created_at|date }}</span
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}
