@@ -113,7 +113,10 @@ def exam_quiz_check(request, slug, pk):
             # message text should be like this: User {name} passed exam {exam} with score {score} out of {quizzes_length}
             message = 'User "' + quiz_user.name + '" passed exam "' + exam.name + '" with score ' + str(result.score) + ' out of ' + str(exam.quizzes_length) + '" at "' + datetime.now().strftime("%d/%m/%Y %H:%M") + '"'
             url = 'https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage?chat_id=' + CHAT_ID + '&text=' + message
-            requests.get(url)
+            try:
+                requests.get(url)
+            except (ConnectionError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError):
+                print("CONNECTION ERROR ON SENDING MESSAGE TO THE GROUP")
             return JsonResponse({"exam_result_url": '/my/quiz/' + slug + '/' + 'result/', "quiz_user": request.user.username})
 
     result.score = 0
@@ -125,11 +128,10 @@ def exam_quiz_check(request, slug, pk):
 def redirect_exam_quiz(request, slug):
     if request.user.is_authenticated:
         url = 'https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage?chat_id=' + CHAT_ID + '&text=User "' + request.user.username + '" started exam "' + Exam.objects.get(slug=slug).name + '" at "' + datetime.now().strftime("%d/%m/%Y %H:%M") + '"'
-        a=requests.get(url)
-        print(url)
-        print(a)
-        if a.status_code == 200:
-            print('ok')
+        try:
+            requests.get(url)
+        except:
+            print("CONNECTION ERROR ON SENDING MESSAGE TO THE GROUP")
         quiz_user = QuizUser.objects.get(pk=request.session['quiz_user'])
         result = Result.objects.get(
             user=quiz_user, exam=Exam.objects.get(slug=slug))

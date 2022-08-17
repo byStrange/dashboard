@@ -32,7 +32,7 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('my/', include('her.urls', namespace="her")),
     path("settings/", include("edit.urls", namespace="edit")),
-    path('/logout', user_logout, name="logout")
+    path('logout/', user_logout, name="logout")
 ]
 
 

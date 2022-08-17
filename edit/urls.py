@@ -9,7 +9,7 @@ urlpatterns = [
     path('users/<int:pk>/', views.quiz_user_detail, name="quiz_user_detail"),
 
     path("exams/", views.exams, name="exams"),
-    path("exams/<str:slug>/", views.exam, name="exam"),
+    path("exams/<int:pk>/", views.exam, name="exam"),
     # path("exams/<str:slug>/<int:pk>/", views.quiz_edit, name="exam"),
     path('exams/<int:pk>/add/', views.add_quiz, name="add_quiz"),
     path('exams/<int:pk>/delete/', views.delete_exam, name="delete_exam"),

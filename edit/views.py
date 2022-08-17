@@ -42,14 +42,14 @@ def exams(request):
 
 
 @staff_member_required
-def exam(request, slug):
-    exam = Exam.objects.get(slug=slug)
+def exam(request, pk):
+    exam = Exam.objects.get(id=pk)
     # all quiz users who have taken this exam
     quiz_users = QuizUser.objects.all()
     quizzes = Quiz.objects.filter(exam=exam)
     t = []
     for quiz_user in quiz_users:
-        if quiz_user.passed_exams.filter(slug=slug).exists():
+        if quiz_user.passed_exams.filter(id=pk).exists():
             t.append(quiz_user)
     return render(request, 'settings/exam.html', {'exam': exam, 't': t, 'quizzes': quizzes})
 
