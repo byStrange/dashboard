@@ -81,10 +81,12 @@ def add_exam(request):
             data = request.POST
             name = data['exam_name']
             description = data['exam_desc']
-            private = data['private']
+            private = False
             private = True if private == 'true' else False
             count_down = data['exam_limit']
-            exam = Exam.objects.create(name=name, description=description, private=private, count_down=count_down)
+            def make_slug(x): return ''.join(e for e in x if e.isalnum() or e == ' ').lower().replace(' ', '-')
+            slug = make_slug(name)
+            exam = Exam.objects.create(name=name, description=description, private=private, count_down=count_down, slug=slug)
             exam.save()
             print("successfully", exam.name, ' created')
             return redirect('/settings/exams/')

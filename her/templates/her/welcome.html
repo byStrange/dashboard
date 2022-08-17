@@ -1,7 +1,7 @@
 {% extends './base.html' %}
 
 {% block content %}
-        
+
     <div class="container">
         <div class="quiz-box">
             <div class="quiz-title">
@@ -11,7 +11,9 @@
                 <div class="content">
                 <p style="margin-bottom: 5px;">Available exams</p>
                 {% for exam in exams %}
-                <a class="exam-item" href="{% url 'her:exam' exam.slug %}"><span>{{ exam.name }}</span> {{exam.quizzes_length}}</a>
+                {% if exam.quizzes_length > 0 %}
+                    <a class="exam-item" href="{% url 'her:exam' exam.slug %}"><span>{{ exam.name }}</span> {{exam.quizzes_length}}</a>
+                {% endif %}
                 {% endfor %}
                 </div>
             </div>

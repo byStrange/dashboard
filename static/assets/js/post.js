@@ -1,3 +1,4 @@
+document.querySelector(".quiz-box .quiz-title span").innerText = localStorage.getItem('info') || "Quiz";
 const nextBtn =
   document.querySelector("#nextQuiz") ||
   document.createElement("button");
@@ -28,6 +29,8 @@ nextBtn.onclick = function () {
       const response = JSON.parse(this.responseText);
       var { next_quiz_url } = response;
       var { exam_result_url } = response;
+      var info = `${response.current_index + 1}/${response.quizzes_length}`;
+      localStorage.setItem("info", info);
       if (next_quiz_url) {
         window.location.href = next_quiz_url;
       } else {
