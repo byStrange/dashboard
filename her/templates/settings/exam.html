@@ -13,38 +13,42 @@
         </div>
         {% endfor %}
       </div>
-      <a href="{% url 'edit:add_quiz' exam.id  %}"
-        ><div class="add mt-2">
-          <button class="button button-danger">Add</button>
-        </div></a
-      >
+      <div class="add mt">
+          <a href="{% url 'edit:add_quiz' exam.id  %}" class="side-btn">
+          <button class="button"><span class="icon"><i class="fas fa-plus"></i></span><span class="text">Add Question</span></button>
+        </a>
+      </div>
+      <div class="delete">
+          <a href="{% url 'edit:delete_exam' exam.id %}" class="side-btn">
+          <button class="button button-danger"><span class="icon"><i class="fas fa-trash-can"></i></span><span class="text">Delete this exam</span></button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
 <script>
   var csrf_token = document.querySelector('[name="csrfmiddlewaretoken"]').value;
   var default_headers = {
-    'X-CSRFToken': csrf_token,
-    'Content-Type': 'application/json'
+    "X-CSRFToken": csrf_token,
+    "Content-Type": "application/json",
   };
   function deleteQuiz(id) {
     var headers = Object.assign({}, default_headers);
-    headers['X-METHOD'] = 'DELETE';
-    fetch("/settings/" + 'delete/quiz/' + id + '/', {
-      method: 'POST',
-      headers: headers
-    }).then(function(response) {
-      if(response.ok) {
+    headers["X-METHOD"] = "DELETE";
+    fetch("/settings/" + "delete/quiz/" + id + "/", {
+      method: "POST",
+      headers: headers,
+    }).then(function (response) {
+      if (response.ok) {
         document.querySelector('[data-quiz-id="' + id + '"]').remove();
       }
     });
   }
-  document.querySelectorAll('.answers .option').forEach(function(option) {
-    option.addEventListener('dblclick', function() {
-      var id = option.getAttribute('data-quiz-id');
+  document.querySelectorAll(".answers .option").forEach(function (option) {
+    option.addEventListener("dblclick", function () {
+      var id = option.getAttribute("data-quiz-id");
       deleteQuiz(id);
     });
-  }
-  );
+  });
 </script>
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'her/base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>Settings</span>
+    </div>
+    <div class="content">
+      <div class="row" style="display: flex; gap: 100px">
+        <a href="{% url 'edit:exams' %}" class="no-link" style="width: 50%">
+          <div class="col d-center block" style="width: 100%">
+            <div class="icon">
+              <i class="fa-solid fa-file-invoice fa-2x"></i>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'edit:quiz_users' %}" class="no-link" style="width: 50%">
+          <div class="col d-center block" style="width: 100%">
+            <div class="icon">
+              <i class="fa-solid fa-user-graduate fa-2x"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

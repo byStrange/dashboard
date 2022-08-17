@@ -1,26 +1,22 @@
-{% extends './base.html' %}
-
-{% block content %}
-
-    <div class="container">
-        <div class="quiz-box">
-            <div class="quiz-title">
-                <span>Welcome to "quiz"</span>
-            </div>
-            <div class="quiz-box">
-                <div class="content">
-                <p style="margin-bottom: 5px;">Available exams</p>
-                {% for exam in exams %}
-                {% if exam.quizzes_length > 0 %}
-                    <a class="exam-item" href="{% url 'her:exam' exam.slug %}"><span>{{ exam.name }}</span> {{exam.quizzes_length}}</a>
-                {% endif %}
-                {% endfor %}
-                </div>
-            </div>
-        </div>
+{% extends './base.html' %} {% block content %}
+<div class="container">
+  <div class="quiz-box">
+    <div class="quiz-title">
+      <span>Welcome to "quiz"</span>
     </div>
+    <div class="quiz-box">
+      <div class="content">
+        <p style="margin-bottom: 5px">Available exams</p>
+        {% for exam in exams %} {% if exam.quizzes_length > 0 %}
+        <a class="exam-item" href="{% url 'her:exam' exam.slug %}"
+          ><span>{{ exam.name }}</span> {{exam.quizzes_length}}</a
+        >
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 
-{% endblock content %}
-{% block title %}
-    <title>Welcome to the Homepage</title>
+{% endblock content %} {% block title %}
+<title>Welcome to the Homepage</title>
 {% endblock title %}

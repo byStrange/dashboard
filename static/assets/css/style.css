@@ -74,13 +74,13 @@ body {
   overflow: hidden;
 } 
 
-.quiz-user .option span{
+.quiz-user .option span {
   position: relative;
   z-index: 2;
 }
 
 
-.quiz-user .option::after{
+.quiz-user .option::after {
   content: attr(data-id);
   position: absolute;
   top: 50%;
@@ -89,7 +89,7 @@ body {
   font-size: 80px !important;
   color: #ccc;
   z-index: 1;
-  opacity: .28;
+  opacity: 0.28;
 }
 
 [data-created] {
@@ -106,7 +106,7 @@ body {
   font-size: 70px !important;
   color: #ccc;
   z-index: 1;
-  opacity: .28;
+  opacity: 0.28;
   width: 100%;
 }
 
@@ -125,7 +125,7 @@ body {
   font-size: 50px !important;
   color: #ccc;
   z-index: 1;
-  opacity: .20;
+  opacity: 0.2;
 }
 
 .quiz-box .content .question {
@@ -159,7 +159,7 @@ body {
   display: flex;
 }
 
-.answers.add-quiz .field .option._ div{
+.answers.add-quiz .field .option._ div {
   height: 100%;
   align-items: center;
   display: flex;
@@ -172,7 +172,7 @@ body {
   justify-content: flex-start;
 }
 
-.answers.add-quiz .field .option._ div:last-child{
+.answers.add-quiz .field .option._ div:last-child {
   width: calc(100% - 30px);
 }
 
@@ -202,7 +202,7 @@ body {
   border: 1px solid #b8daff;
 }
 
-.quiz-box .answers .option:hover div  input{
+.quiz-box .answers .option:hover div input {
   background: #cce5ff !important;
 }
 
@@ -210,7 +210,7 @@ body {
   color: #004085;
   background: #cce5ff;
   border: 1px solid #b8daff;
-  transform: scale(.95);
+  transform: scale(0.95);
   user-select: none;
 }
 
@@ -236,7 +236,7 @@ body {
   margin-top: 25px;
 }
 
-button.button {
+.button {
   height: 40px;
   padding: 0 13px;
   font-size: 18px;
@@ -253,6 +253,11 @@ button.button {
   user-select: none;
 }
 
+.button.button-danger {
+  background: #dc3545;
+  border: 1px solid #dc3545;
+}
+
 .button.button-outline {
   background: transparent;
   border: 1px solid #007bff;
@@ -262,6 +267,45 @@ button.button {
 .button.button-outline:hover {
   background: #007bff;
   color: #fff;
+}
+
+.side-btn {
+  display: inline-block;
+  transform: translateX(-50%);
+  text-align: left;
+  margin-bottom: 3px;
+  transition: 250ms;
+}
+
+
+.side-btn:hover {
+  transform: translateX(-25px);
+}
+.side-btn:hover .text{
+  opacity: 1;
+  left: 0;
+  position: relative;
+}
+
+.side-btn:hover .icon {
+  opacity: 0;
+  position: absolute;
+  left: -20px; 
+}
+
+.side-btn .button .icon {
+  transition: 250ms linear all;
+}
+
+.side-btn button {
+  border-radius: 0 5px 5px 0;
+}
+
+.side-btn .text {
+  opacity: 0;
+  position: absolute;
+  transition: opacity 500ms, position 5s;
+  left: -50px;
 }
 
 .quiz .navigation button:hover {
@@ -328,7 +372,9 @@ button.button {
   color: #000;
 }
 
-:is(form, .form) input:not([type="checkbox"]), textarea, select {
+:is(form, .form) input:not([type="checkbox"]),
+textarea,
+select {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
@@ -345,7 +391,8 @@ button.button {
   margin-top: 0 !important;
 }
 
-.magic.container .magic-input, .magic.container [type="submit"] {
+.magic.container .magic-input,
+.magic.container [type="submit"] {
   font-size: 25px;
   font-weight: 500;
   padding: 15px 30px;
@@ -364,7 +411,7 @@ button.button {
   display: inline-block;
 }
 
-.magic.container label{
+.magic.container label {
   font-size: 24px;
   color: #fff;
 }
@@ -393,11 +440,15 @@ button.button {
   text-decoration: none;
 }
 
-.timer 
-{
+.no-link {
+  text-decoration: none;
+  color: initial;
+}
+
+.timer {
   display: none;
 }
-#toggleFullScreen{
+#toggleFullScreen {
   display: none;
 }
 
@@ -407,19 +458,18 @@ button.button {
   position: relative;
 }
 
-.result-row::after{
+.result-row::after {
   content: attr(data-count);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 5rem;
-  background: linear-gradient(to right, #dc3545 50%, #198754 51% ,#198754 100%   );
+  background: linear-gradient(to right, #dc3545 50%, #198754 51%, #198754 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 .result-row .side span:not(.text-muted) {
   font-size: 45px;
@@ -441,6 +491,19 @@ button.button {
 
 .result-row .side.side-danger {
   background-color: #dc3545;
+}
+
+.d-center {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.col.block {
+  background: aliceblue;
+  border: 1px solid #84c5fe;
+  border-radius: 5px;
+ height: 100px 
 }
 
 @media screen and (max-width: 768px) {
