@@ -46,7 +46,9 @@ body {
   max-width: 800px;
   border-radius: 10px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-  max-height: 650px;
+  max-height: 84vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .container .quiz-box.zoomIn {
@@ -54,13 +56,18 @@ body {
 }
 
 .container .quiz-box .quiz-title {
-  position: relative;
+  position: absolute;
+  background-color: rgba(255,255,255,.2);
   text-align: center;
   font-size: 40px;
   font-weight: bold;
   width: 100%;
   padding: 10px 0;
+  z-index: 5;
+  backdrop-filter: blur(10px);
+  -wbkit-backdrop-filter: blur(10px);
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 100%;
 }
 
 .quiz-box .content {

@@ -1,8 +1,7 @@
-document.querySelector(".quiz-box .quiz-title span").innerText = localStorage.getItem('info') || "Quiz";
+document.querySelector(".quiz-box .quiz-title span").innerText =
+  localStorage.getItem("info") || "Quiz";
 const nextBtn =
-  document.querySelector("#nextQuiz") ||
-  document.createElement("button");
-
+  document.querySelector("#nextQuiz") || document.createElement("button");
 // const prevBtn =
 //   prevQuiz ||
 //   document.querySelector("#prevQuiz") ||
@@ -45,7 +44,7 @@ nextBtn.onclick = function () {
       "/test/" +
       data.question_id +
       "/check?data=" +
-      JSON.stringify(data),
+      JSON.stringify(data)
   );
   xhttp.send();
 };

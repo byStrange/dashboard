@@ -7,7 +7,7 @@
             <div class="content">
                 <div class="answers">
                     {% for quiz_user in quiz_users %}
-                        <a href="{% url 'edit:quiz_user_detail' quiz_user.id %}" style="text-decoration: none; color: initial" class="quiz-user">
+                        <a href="{% url 'edit:quiz_user_detail' quiz_user.id %}" class="quiz-user no-link">
                             <div class="option" data-id="{{quiz_user.id}}">
                                 <span>{{ quiz_user.name }}</span>
                             </div>
