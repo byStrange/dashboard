@@ -21,9 +21,11 @@ from django.shortcuts import redirect
 from her.views import register_view, login_view
 from django.contrib.auth import logout
 
+
 def user_logout(request):
     logout(request)
     return redirect('/my/')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

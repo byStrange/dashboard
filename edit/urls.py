@@ -10,7 +10,6 @@ urlpatterns = [
 
     path("exams/", views.exams, name="exams"),
     path("exams/<int:pk>/", views.exam, name="exam"),
-    # path("exams/<str:slug>/<int:pk>/", views.quiz_edit, name="exam"),
     path('exams/<int:pk>/add/', views.add_quiz, name="add_quiz"),
     path('exams/<int:pk>/delete/', views.delete_exam, name="delete_exam"),
     path('delete/quiz/<int:quiz_id>/', views.delete_quiz, name="delete_quiz"),

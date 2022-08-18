@@ -65,7 +65,7 @@ body {
 
 .quiz-box .content {
   padding: 20px;
-  height: 86%;
+  height: 100%;
   overflow: auto;
 }
 
@@ -78,6 +78,7 @@ body {
   position: relative;
   z-index: 2;
 }
+
 
 .quiz-user .option::after {
   content: attr(data-id);

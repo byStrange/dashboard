@@ -4,14 +4,6 @@ from django.http import JsonResponse
 from her.models import *
 import json
 from django.contrib.admin.views.decorators import staff_member_required
-# Create your views here.
-
-
-# def is_staff(request):
-#     if request.user.is_authenticated and request.user.is_staff:
-#         return True
-#     else:
-#         return False
 
 
 def index(request):
@@ -20,7 +12,6 @@ def index(request):
 
 @staff_member_required
 def quiz_user_detail(request, pk):
-    # if is_staff(request):
     quiz_user = QuizUser.objects.get(pk=pk)
     return render(request, 'settings/quiz_user_detail.html', {'quiz_user': quiz_user})
 

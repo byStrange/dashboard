@@ -13,13 +13,13 @@
     <div class="navbar">
       <div class="nav-logo">
         <a href="/">
-          Brand
+          Quiz
         </a>
       </div>
       <div class="action">
         {% if request.user.is_authenticated %}
         <div class="logout">
-          <a href="/logout">Logout</a>
+          <a href="{% url 'logout' %}">Logout</a>
         </div>
         {% endif %}
       </div>

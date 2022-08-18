@@ -10,7 +10,6 @@ admin.site.register(EditorUser)
 admin.site.register(Result)
 admin.site.register(UserAnswer)
 
-# admin site register exam with prepopulated fields name and slug
 class ExamAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Exam, ExamAdmin)
