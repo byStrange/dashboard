@@ -70,6 +70,10 @@ body {
   margin-bottom: 100%;
 }
 
+.container .quiz-box .quiz-title.p-relative {
+  position: relative;
+}
+
 .quiz-box .content {
   padding: 20px;
   height: 83%;

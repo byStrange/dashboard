@@ -1,7 +1,7 @@
 {% extends './base.html' %} {% block content %}
 <div class="container">
   <div class="quiz-box">
-    <div class="quiz-title">
+    <div class="quiz-title p-relative">
       Dear <span class="marked">{{result.user.name}}</span>
     </div>
     <div class="result-content">
@@ -39,3 +39,6 @@
   </div>
 </div>
 {%endblock %}
+{% block title %}
+<title>Your result {{ result.user.name }}</title>
+{% endblock %}
