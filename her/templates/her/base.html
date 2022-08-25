@@ -27,8 +27,12 @@
     </div>
     {% block content %} {% endblock %} {% block script %} {% endblock %}
     <script>
-      const content = document.querySelector(".content");
-      content.style.marginTop = 81 + "px";
+      const quizBoxes = document.querySelectorAll(".quiz-box");
+      quizBoxes.forEach(box=>{
+        if (!box.querySelector('.quiz-title').className.includes('p-relative')) {
+          box.querySelector('.content').style.marginTop = 81 + 'px';
+        }
+      })
     </script>
   </body>
 </html>
