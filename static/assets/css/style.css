@@ -42,7 +42,7 @@ body {
   background: var(--light-quiz-box-background, #f7f7f7);
   transition: 450ms;
   overflow: hidden;
-  min-width: 400px;
+  min-width: 550px;
   max-width: 800px;
   border-radius: 10px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
@@ -57,7 +57,7 @@ body {
 
 .container .quiz-box .quiz-title {
   position: absolute;
-  background-color: rgba(255,255,255,.2);
+  background-color: rgba(255, 255, 255, 0.2);
   text-align: center;
   font-size: 40px;
   font-weight: bold;
@@ -81,13 +81,12 @@ body {
 .quiz-user .option {
   position: relative;
   overflow: hidden;
-} 
+}
 
 .quiz-user .option span {
   position: relative;
   z-index: 2;
 }
-
 
 .quiz-user .option::after {
   content: attr(data-id);
@@ -286,11 +285,10 @@ body {
   transition: 250ms;
 }
 
-
 .side-btn:hover {
   transform: translateX(-25px);
 }
-.side-btn:hover .text{
+.side-btn:hover .text {
   opacity: 1;
   left: 0;
   position: relative;
@@ -299,7 +297,7 @@ body {
 .side-btn:hover .icon {
   opacity: 0;
   position: absolute;
-  left: -20px; 
+  left: -20px;
 }
 
 .side-btn .button .icon {
@@ -366,10 +364,52 @@ body {
   background: var(--light-quiz-danger-background);
 }
 
+.animation .field {
+  transition: 300ms;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.blur-container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+.blur-container.show {
+  backdrop-filter: blur(10px);
+  background:rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+input#questionType {
+  opacity: 0;
+  transition: opacity 300ms, width 500ms cubic-bezier(0.33, -0.45, 0.76, 1.53);
+  position: absolute;
+  z-index: -2;
+  width: 100%;
+  top: 10px;
+}
+
+input#questionType.show {
+  opacity: 1;
+  width:  85%;
+  z-index: 2;
+}
+
+
 :is(form, .form) .field {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.field.remove-animation {
+  transform: translate(0);
+  opacity: 1;
 }
 
 :is(form, .form) .field:not(:last-child) {
@@ -505,14 +545,14 @@ select {
 .d-center {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 
 .col.block {
   background: aliceblue;
   border: 1px solid #84c5fe;
   border-radius: 5px;
- height: 100px 
+  height: 100px;
 }
 
 @media screen and (max-width: 768px) {

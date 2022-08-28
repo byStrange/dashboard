@@ -1,4 +1,6 @@
 {% extends 'her/base.html' %} {% block content %} {% csrf_token %}
+<div class="blur-container">
+</div>
 <div class="container">
   <div class="quiz-box zoomIn">
     <div class="quiz-title">
@@ -16,9 +18,20 @@
             style="width: 100%"
             tabindex="1"
           />
+          <div class="d-flex gap-1  p-relative">
+            <select class="option option-input mt" id="questionTypes" name="question_type">
+              <option value="" selected disabled>Select Type</option>
+              <option>sad</option>
+              {% for type in types %}
+              <option>{{ type.name }}</option>
+              {% endfor %}
+            </select>
+            <input class="option" placeholder="Enter a name" id="questionType">
+            <button class="option mt" id="addQuestionTypeButton" data-send="false">+</button>
+          </div>
         </div>
-        <div class="options">
-          <div class="field">
+        <div class="options animation">
+          <div class="field remove-animation">
             <div class="option _">
               <div>
                 <input type="radio" name="answer" id="answer" />
@@ -54,12 +67,54 @@
   const addButtton = document.querySelector("#add");
   const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
   const sendButton = document.querySelector("#send");
+  const modalContainer = document.querySelector(".blur-container");
   const default_headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
     "X-CSRFToken": csrf_token,
   };
+
+  addQuestionTypeButton.addEventListener("click", function () {
+    modalContainer.classList.toggle("show");
+    addQuestionTypeButton.style = 'position: relative; z-index: 2;';
+    questionType.classList.toggle('show')    
+    if (addQuestionTypeButton.dataset.send == 'true') {
+      var name = questionType.value;
+      var old_question_types = Array.from(document.querySelector("#questionTypes").children);
+      var l = false;
+      old_question_types.forEach(option => {
+        if (name.trim().toLowerCase() == option.value) {
+          l = true
+        }
+      })
+      if (l) {
+        console.log('l')
+        return;
+      } else {
+        fetch(URL, {
+          method: "POST",
+          headers: default_headers,
+          body: JSON.stringify({
+            data: {
+              name: name
+            }
+          })
+        }).then(response => response.json()).then(data => {
+          if (data.status == 'ok') {
+            questionType.value = '';
+            var option = document.createElement('option');
+            option.value = data.name;
+            option.innerText = data.name;
+            document.querySelector("#questionTypes").appendChild(option);
+          } else {
+            throw Error("Error on posting data to: ", URL)
+          }
+        })
+      }
+    }
+    addQuestionTypeButton.dataset.send == 'false' ? addQuestionTypeButton.dataset.send = 'true' : addQuestionTypeButton.dataset.send = 'false'
+  })
 
   addButtton.onclick = add;
   window.onkeyup = function (e) {
@@ -90,11 +145,15 @@
     field.className = "field mt";
     field.innerHTML = template;
     container.appendChild(field);
+    setTimeout(function () {
+      field.classList.add("remove-animation");
+    }, 1);
   }
 
   sendButton.onclick = function () {
     var question = document.querySelector("#question").value;
     var options = document.querySelectorAll(".option._");
+    var questionType = document.querySelector('#questionTypes').value;
     var answers = [];
     var correct = [];
     options.forEach(function (option) {
@@ -110,6 +169,7 @@
         question: question,
         answers: answers,
         correct: correct,
+        question_type: questionType
       },
     };
     if (
@@ -135,7 +195,6 @@
     }
   };
 </script>
-{% endblock %}
-{% block title %}
+{% endblock %} {% block title %}
 <title>Create a new question</title>
 {% endblock title %}

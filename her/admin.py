@@ -1,9 +1,9 @@
 from django.contrib import admin
-from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result, UserAnswer
+from her.models import QuizUser, Question, QuizOption, QuizType, EditorUser, Exam, Result, UserAnswer
 # Register your models here.
 
 admin.site.register(QuizUser)
-admin.site.register(Quiz)
+admin.site.register(Question)
 admin.site.register(QuizOption)
 admin.site.register(QuizType)
 admin.site.register(EditorUser)

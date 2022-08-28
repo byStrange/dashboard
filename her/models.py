@@ -15,7 +15,7 @@ class Exam(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def set_quiz_length(self):
-        self.quizzes_length = len(Quiz.objects.filter(exam=self))
+        self.quizzes_length = len(Question.objects.filter(exam=self))
         self.save()
         return self.quizzes_length
 
@@ -26,7 +26,7 @@ class Exam(models.Model):
 class EditorUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     quiz_created = models.IntegerField(default=0)
-    quizzes = models.ManyToManyField('Quiz', blank=True)
+    quizzes = models.ManyToManyField('Question', blank=True)
 
     def __str__(self):
         return self.user.username if self.user.username else self.user.first_name
@@ -68,11 +68,11 @@ class UserAnswer(models.Model):
         return self.answer
 
 
-class Quiz(models.Model):
+class Question(models.Model):
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
     user_answer = models.ManyToManyField(
-        UserAnswer, blank=True, null=True) 
+        UserAnswer, blank=True) 
     exam = models.ForeignKey(
         Exam, on_delete=models.CASCADE, null=True, default=None)
     species = models.ForeignKey('QuizType', on_delete=models.CASCADE)
@@ -82,13 +82,11 @@ class Quiz(models.Model):
     def __str__(self):
         return self.question
 
-    class Meta:
-        verbose_name_plural = "Quizes"
 
 
 class QuizOption(models.Model):
     option = models.CharField(max_length=255)
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_true = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

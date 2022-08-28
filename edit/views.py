@@ -1,4 +1,3 @@
-from re import L
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from her.models import *
@@ -18,7 +17,7 @@ def quiz_user_detail(request, pk):
 
 @staff_member_required
 def delete_quiz(request, quiz_id):
-    quiz = Quiz.objects.get(pk=quiz_id)
+    quiz = Question.objects.get(pk=quiz_id)
     options = QuizOption.objects.filter(quiz=quiz)
     for option in options:
         option.delete()
@@ -37,7 +36,7 @@ def exam(request, pk):
     exam = Exam.objects.get(id=pk)
     # all quiz users who have taken this exam
     quiz_users = QuizUser.objects.all()
-    quizzes = Quiz.objects.filter(exam=exam)
+    quizzes = Question.objects.filter(exam=exam)
     t = []
     for quiz_user in quiz_users:
         if quiz_user.passed_exams.filter(id=pk).exists():
@@ -53,23 +52,32 @@ def quiz_users(request):
 
 @staff_member_required
 def add_quiz(request, pk):
+    exam = Exam.objects.get(pk=pk)
+    question_types = QuizType.objects.all()
     if request.method == "POST":
-        default_quiz_type = QuizType.objects.get(name="test")
         data = json.load(request)['data']
+        if data.get('name'):
+            quiz_type = QuizType.objects.create(name=data.get('name'))
+            quiz_type.save()
+            return JsonResponse({'status': 'ok', 'name': quiz_type.name})
         question = data['question']
         answers = data['answers']
         correct = data['correct']
-        exam = Exam.objects.get(pk=pk)
-        quiz = Quiz.objects.create(
-            question=question, exam=exam, answer=correct[0], species=default_quiz_type)
+        question_type = data['question_type']
+        try:
+            question_type = QuizType.objects.get(pk=question_type)
+        except:
+            # create a new one
+            question_type = QuizType.objects.create(name=question_type)
+            question_type.save()
+        quiz = Question.objects.create(
+            question=question, exam=exam, answer=correct[0], species=question_type)
         for answer in answers:
             QuizOption.objects.create(
                 quiz=quiz, option=answer, is_true=True if answer == correct[0] else False).save()
         quiz.save()
-        print('Quiz',  quiz.id, 'created')
-        print("successfully ", quiz.question, ' created')
         return JsonResponse({"ok": True, 'status': 'OK'})
-    return render(request, 'settings/new_quiz.html', {'exam': Exam.objects.get(pk=pk)})
+    return render(request, 'settings/new_quiz.html', {'exam': exam, 'types': question_types})
 
 
 @staff_member_required

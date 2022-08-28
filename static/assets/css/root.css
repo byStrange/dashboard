@@ -67,3 +67,15 @@
 .py-4 {
   padding: 40px;
 }
+
+.d-flex {
+  display: flex;
+}
+
+.gap-1 {
+  gap: 10px;
+}
+
+.p-relative {
+  position: relative;
+}

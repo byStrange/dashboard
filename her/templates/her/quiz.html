@@ -24,11 +24,11 @@
     </div>
     <div class="content">
       <div class="quiz">
-        <div class="images">
-        </div>
-        <div class="question" data-id="1">
+        {% comment %} <div class="images">
+        </div> {% endcomment %}
+        <div class="question" data-id="{{ question.id }}">
           <span
-            >{{ quiz.question }}</span
+            >{{ question.question }}</span
           >
         </div>
         <div class="answers">
@@ -54,7 +54,7 @@
 {% endblock %} {% block script %}
 <script>
   const exam_slug = "{{ exam.slug }}";
-  const question_id = {{ quiz.id }};
+  const question_id = {{ question.id }};
   const csrf_token = "{{ csrf_token }}";
 </script>
 <script src="{% static 'assets/js/post.js' %}"></script>
