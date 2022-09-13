@@ -24,8 +24,8 @@
   --navbar-height: 70px;
 }
 
-.marked {
-  color: #1f5c9e;
+.marked, .marked a{
+  color: #1f5c9e !important;
 }
 
 .mt {

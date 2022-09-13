@@ -4,7 +4,7 @@
 <div class="container">
   <div class="quiz-box zoomIn">
     <div class="quiz-title">
-      <span>Add Quiz to <span class="marked">{{ exam.name }}</span></span>
+      <span>Add Quiz to <span class="marked"><a href="{% url 'edit:exam' exam.id %}" class="link">{{ exam.name }}</a></span></span>
     </div>
     <div class="content">
       <div class="answers add-quiz">
@@ -21,7 +21,6 @@
           <div class="d-flex gap-1  p-relative">
             <select class="option option-input mt" id="questionTypes" name="question_type">
               <option value="" selected disabled>Select Type</option>
-              <option>sad</option>
               {% for type in types %}
               <option>{{ type.name }}</option>
               {% endfor %}
@@ -175,7 +174,8 @@
     if (
       data.data.question &&
       data.data.answers.length > 0 &&
-      data.data.correct.length > 0
+      data.data.correct.length > 0 && 
+      data.data.question_type
     ) {
       fetch(URL, {
         method: "POST",

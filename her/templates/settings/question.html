@@ -1,0 +1,221 @@
+{% extends 'her/base.html' %} {% block content %} {% csrf_token %}
+<div class="blur-container">
+</div>
+<div class="container">
+  <div class="quiz-box zoomIn">
+    <div class="quiz-title">
+      <span>Update Question in <span class="marked"><a href="{% url 'edit:exam' exam.id %}" class="link">{{ exam.name }}</a></span></span>
+    </div>
+    <div class="content">
+      <div class="answers add-quiz">
+        <div class="field">
+          <label for="question">Question</label>
+
+          <input
+            type="text"
+            id="question"
+            class="option option-input mt"
+            name="question"
+            placeholder="Question"
+            style="width: 100%"
+            tabindex="1"
+            value="{{ question.question }}"
+          />
+          <div class="field mt-1">
+            <label for="questionType">Question type</label>
+            <div class="d-flex gap-1  p-relative">
+              <select class="option option-input  mt" id="questionTypes" name="question_type">
+                {% for type in types %}
+                <option {% if question.species.name == type.name %}selected{% endif %}>{{ type.name }}</option>
+                {% endfor %}
+              </select>
+              <input class="option" placeholder="Enter a name" id="questionType">
+              <button class="option mt" id="addQuestionTypeButton" data-send="false">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="options animation">
+          <label>Options</label>
+            {% for option in options %}
+            <div class="field remove-animation mt">
+            <div class="option _">
+                <div>
+                  <input type="radio" name="answer" id="answer" {% if option.option == question.answer%}checked{%endif%}/>
+                </div>
+                <div>
+                  <input
+                    name="option"
+                    id="option"
+                    data-sent="false"
+                    placeholder="option"
+                    tabindex="2"
+                    value="{{option.option}}"
+                  />
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <div class='new mt'>
+                <hr />
+            </div>
+        </div>
+
+        <div class="field" style="display: flex">
+          <button class="button button-outline" style="width: 100%" id="add">
+            <span>+</span>
+          </button>
+        </div>
+        <div class="field">
+          <button class="button" id="update">
+            <span>update</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const URL = '{% url "edit:add_quiz" exam.id %}';
+  const addButtton = document.querySelector("#add");
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  const updateButton = document.querySelector("#update");
+  const modalContainer = document.querySelector(".blur-container");
+  const default_headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRFToken": csrf_token,
+  };
+
+  addQuestionTypeButton.addEventListener("click", function () {
+    modalContainer.classList.toggle("show");
+    addQuestionTypeButton.style = 'position: relative; z-index: 2;';
+    questionType.classList.toggle('show')    
+    if (addQuestionTypeButton.dataset.send == 'true') {
+      var name = questionType.value;
+      var old_question_types = Array.from(document.querySelector("#questionTypes").children);
+      var l = false;
+      old_question_types.forEach(option => {
+        if (name.trim().toLowerCase() == option.value) {
+          l = true
+        }
+      })
+      if (l) {
+        console.log('l')
+        return;
+      } else {
+        fetch(URL, {
+          method: "POST",
+          headers: default_headers,
+          body: JSON.stringify({
+            data: {
+              name: name
+            }
+          })
+        }).then(response => response.json()).then(data => {
+          if (data.status == 'ok') {
+            questionType.value = '';
+            var option = document.createElement('option');
+            option.value = data.name;
+            option.innerText = data.name;
+            document.querySelector("#questionTypes").appendChild(option);
+          } else {
+            throw Error("Error on posting data to: ", URL)
+          }
+        })
+      }
+    }
+    addQuestionTypeButton.dataset.send == 'false' ? addQuestionTypeButton.dataset.send = 'true' : addQuestionTypeButton.dataset.send = 'false'
+  })
+
+  addButtton.onclick = add;
+  window.onkeyup = function (e) {
+    if (e.ctrlKey && e.keyCode == 13) {
+      add();
+    }
+  };
+  function add() {
+    var container = document.querySelector(".options .new");
+    var tabindex = container.querySelector(".option") ? +container.querySelector('.option').getAttribute('tabindex') + 1 : 1;
+    var template = `
+          <div class="option _">
+            <div>
+              <input type="radio" name="answer" id="answer" />
+            </div>
+            <div>
+              <input
+                name="option"
+                id="option"
+                data-sent="false"
+                placeholder="option"
+                tabindex="${tabindex}"
+              />
+            </div>
+          </div>
+       `;
+    var field = document.createElement("div");
+    field.className = "field mt";
+    field.innerHTML = template;
+    container.appendChild(field);
+    setTimeout(function () {
+      field.classList.add("remove-animation");
+    }, 1);
+  }
+  var $data = {
+    data: {
+      question: "{{ question.question }}",
+      questionType: document.querySelector("#questionTypes").value,
+      options: Array.from(document.querySelectorAll(".option input:not([type='checkbox'])")).map(e=>e.value),
+    }
+  }
+  console.log($data)
+
+  // updateButton.onclick = function () {
+  //   var question = document.querySelector("#question").value;
+  //   var options = document.querySelectorAll(".option._");
+  //   var questionType = document.querySelector('#questionTypes').value;
+  //   var answers = [];
+  //   var correct = [];
+  //   options.forEach(function (option) {
+  //     var answer = option.querySelector("#answer").checked;
+  //     var option = option.querySelector("#option").value;
+  //     if (answer) {
+  //       correct.push(option);
+  //     }
+  //     answers.push(option);
+  //   });
+  //   var data = {
+  //     data: {
+  //       question: question,
+  //       answers: answers,
+  //       correct: correct,
+  //       question_type: questionType
+  //     },
+  //   };
+  //   if (
+  //     data.data.question &&
+  //     data.data.answers.length > 0 &&
+  //     data.data.correct.length > 0 && 
+  //     data.data.question_type
+  //   ) {
+  //     fetch(URL, {
+  //       method: "POST",
+  //       headers: default_headers,
+  //       body: JSON.stringify(data),
+  //     })
+  //       .then(function (response) {
+  //         return response.json();
+  //       })
+  //       .then(function (data) {
+  //         if (data.ok) {
+  //           location.reload();
+  //         }
+  //       });
+  //   } else {
+  //     alert("Please fill all fields");
+  //   }
+  // };
+</script>
+{% endblock %} {% block title %}
+<title>Update question: {{ question.question|truncatewords:"2"}}</title>
+{% endblock title %}

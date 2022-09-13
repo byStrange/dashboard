@@ -8,9 +8,11 @@
       <p>{{ exam.description }}</p>
       <div class="answers">
         {% for quiz in quizzes %}
-        <div class="option" data-quiz-id="{{quiz.id}}">
-          <span>{{ quiz.question }}</span>
-        </div>
+        <a href="{% url 'edit:question' exam.id quiz.id %}" class="no-link">
+          <div class="option" data-quiz-id="{{quiz.id}}">
+            <span>{{ quiz.question }}</span>
+          </div>
+        </a>
         {% endfor %}
       </div>
       <div class="add mt">
@@ -54,5 +56,5 @@
 {% endblock %}
 
 {% block title %}
-<title>{{ exam.name }}</title>
+<title>Exam: {{ exam.name }}</title>
 {% endblock title %}

@@ -24,12 +24,9 @@
     </div>
     <div class="content">
       <div class="quiz">
-        {% comment %} <div class="images">
-        </div> {% endcomment %}
+        {%if question.type == 'test' %}
         <div class="question" data-id="{{ question.id }}">
-          <span
-            >{{ question.question }}</span
-          >
+          <span>{{ question.question }}</span>
         </div>
         <div class="answers">
           {% for option in options %}
@@ -38,9 +35,13 @@
           </div>
           {% endfor %}
         </div>
+        {% endif %}
         <div class="navigation">
-          {% comment %} <button class="button button-prev" disabled="true" id="prevQuiz">Previous</button> {% endcomment %}
-          {% if is_last %}
+          {% comment %}
+          <button class="button button-prev" disabled="true" id="prevQuiz">
+            Previous
+          </button>
+          {% endcomment %} {% if is_last %}
           <button class="button button-next" id="nextQuiz">Finish</button>
           {% else%}
           <button class="button button-next" id="nextQuiz">Next</button>

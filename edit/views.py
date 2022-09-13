@@ -68,8 +68,7 @@ def add_quiz(request, pk):
             question_type = QuizType.objects.get(pk=question_type)
         except:
             # create a new one
-            question_type = QuizType.objects.create(name=question_type)
-            question_type.save()
+            question_type = QuizType.objects.get(name='test') # default question type
         quiz = Question.objects.create(
             question=question, exam=exam, answer=correct[0], species=question_type)
         for answer in answers:
@@ -77,7 +76,7 @@ def add_quiz(request, pk):
                 quiz=quiz, option=answer, is_true=True if answer == correct[0] else False).save()
         quiz.save()
         return JsonResponse({"ok": True, 'status': 'OK'})
-    return render(request, 'settings/new_quiz.html', {'exam': exam, 'types': question_types})
+    return render(request, 'settings/new_question.html', {'exam': exam, 'types': question_types})
 
 
 @staff_member_required
@@ -105,3 +104,18 @@ def delete_exam(request, pk):
     exam = Exam.objects.get(pk=pk)
     exam.delete()
     return JsonResponse({"ok": True, 'status': 'OK'})
+
+
+@staff_member_required
+def question_detail(request, pk, pk2):
+    exam = Exam.objects.get(pk=pk)
+    question = Question.objects.get(exam=exam, pk=pk2)
+    types = QuizType.objects.all()
+    options = QuizOption.objects.filter(quiz=question)
+    context = {
+        'exam': exam,
+        'question': question,
+        'types': types,
+        'options': options
+    }
+    return render(request, 'settings/question.html', context)
