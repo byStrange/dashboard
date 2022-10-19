@@ -24,17 +24,10 @@
     </div>
     <div class="content">
       <div class="quiz">
-        {%if question.type == 'test' %}
-        <div class="question" data-id="{{ question.id }}">
-          <span>{{ question.question }}</span>
-        </div>
-        <div class="answers">
-          {% for option in options %}
-          <div class="option">
-            <span>{{ option.option }}</span>
-          </div>
-          {% endfor %}
-        </div>
+        {% if question.species.name == 'test' %}
+        {% include "../species/test.html" with question=question options=options%}
+        {% elif question.species.name == "fill_blank"%}
+        {% include "../species/fill_blank.html" with question=question %}
         {% endif %}
         <div class="navigation">
           {% comment %}

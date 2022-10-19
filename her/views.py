@@ -48,6 +48,7 @@ def exam_quiz_view(request, slug, pk):
     question = Question.objects.get(pk=pk, exam=exam)
     options = QuizOption.objects.filter(quiz=question)
     print(options)
+    print(question.species.name == "test")
     last_quiz = Question.objects.filter(
         exam=Exam.objects.get(slug=slug)).order_by('-id')[0]
 

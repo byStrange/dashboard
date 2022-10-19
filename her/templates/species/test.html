@@ -1,0 +1,10 @@
+<div class="question" data-id="{{ question.id }}">
+  <span>{{ question.question }}</span>
+</div>
+<div class="answers">
+  {% for option in options %}
+  <div class="option">
+    <span>{{ option.option }}</span>
+  </div>
+  {% endfor %}
+</div>

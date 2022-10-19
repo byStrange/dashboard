@@ -1,27 +1,67 @@
 :root {
-  --light-body-background: linear-gradient(
+  --body-background: linear-gradient(
     to left,
     rgba(0, 123, 255, 1),
     rgba(0, 123, 255, 0.7)
   );
-  --light-quiz-option-background: aliceblue;
+  --quiz-box-background: #f7f7f7;
+  --quiz-box-shadow: rgba(0, 0, 0, 0.1);
+  
+  --quiz-button-background: #007bff;
+  --quiz-onHover-background: #0263ca;
+  --quiz-danger-button-background: #dc3545;
+  --quiz-disabled-button: #033161;
 
-  --light-quiz-option-onHover-background: #cce5ff;
-  --light-quiz-option-onHover-color: #004085;
-  --light-quiz-option-onHover-border: 1px solid #b8daff;
+  --quiz-option-background: aliceblue;
+  --quiz-option-border-color: #84c5fe;
+  --quiz-option-onHover-background: #cce5ff;
+  --quiz-option-onHover-color: #004085;
+  --quiz-option-onHover-border-color: #b8daff;
 
-  --light-quiz-option-incorrect-background: #f8d7da;
-  --light-quiz-option-incorrect-color: #721c24;
-  --light-quiz-option-incorrect-border: 1px solid #f5c6cb;
+  --quiz-option-incorrect-background: #f8d7da;
+  --quiz-option-incorrect-color: #721c24;
+  --quiz-option-incorrect-border-color:#f5c6cb;
 
-  --light-quiz-option-correct-background: #d4edda;
-  --light-quiz-option-correct-color: #155724;
-  --light-quiz-option-correct-border: 1px solid #c3e6cb;
+  --quiz-option-correct-background: #d4edda;
+  --quiz-option-correct-color: #155724;
+  --quiz-option-correct-border-color: #c3e6cb;
 
-  --light-quiz-timer-warn-color: #ffcc00;
-  --light-quiz-timer-danger-color: #cc3300;
+  --quiz-timer-warn-color: #ffcc00;
+  --quiz-timer-danger-color: #cc3300;
 
   --navbar-height: 70px;
+}
+
+/* color scheme:dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-background: linear-gradient(
+      to left,
+      rgba(0, 123, 255, 1),
+      rgba(0, 123, 255, 0.7)
+    );
+    --quiz-button-background: #007bff;
+    --quiz-onHover-background: #0263ca;
+    --quiz-danger-button-background: #dc3545;
+    --quiz-disabled-button: #033161;
+
+    --quiz-option-background: #343a40;
+    --quiz-option-border-color: #84c5fe;
+    --quiz-option-onHover-background: #cce5ff;
+    --quiz-option-onHover-color: #004085;
+    --quiz-option-onHover-border-color: #b8daff;
+
+    --quiz-option-incorrect-background: #f8d7da;
+    --quiz-option-incorrect-color: #721c24;
+    --quiz-option-incorrect-border-color:#f5c6cb;
+
+    --quiz-option-correct-background: #d4edda;
+    --quiz-option-correct-color: #155724;
+    --quiz-option-correct-border-color: #c3e6cb;
+
+    --quiz-timer-warn-color: #ffcc00;
+    --quiz-timer-danger-color: #cc3300;
+  }
 }
 
 .marked, .marked a{
