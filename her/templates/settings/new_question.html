@@ -22,7 +22,7 @@
             <select class="option option-input mt" id="questionTypes" name="question_type">
               <option value="" selected disabled>Select Type</option>
               {% for type in types %}
-              <option>{{ type.name }}</option>
+              <option value="{{ type.name }}">{{ type.name }}</option>
               {% endfor %}
             </select>
             <input class="option" placeholder="Enter a name" id="questionType">
@@ -88,7 +88,6 @@
         }
       })
       if (l) {
-        console.log('l')
         return;
       } else {
         fetch(URL, {
@@ -114,7 +113,13 @@
     }
     addQuestionTypeButton.dataset.send == 'false' ? addQuestionTypeButton.dataset.send = 'true' : addQuestionTypeButton.dataset.send = 'false'
   })
-
+  questionTypes.onchange = function (event) {
+    if (event.target.value == "fill_blank") {
+      addButtton.setAttribute("disabled", "")
+    } else {
+      addButtton.removeAttribute('disabled')
+    }
+  }
   addButtton.onclick = add;
   window.onkeyup = function (e) {
     if (e.ctrlKey && e.keyCode == 13) {

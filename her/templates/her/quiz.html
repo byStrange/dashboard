@@ -27,7 +27,7 @@
         {% if question.species.name == 'test' %}
         {% include "../species/test.html" with question=question options=options%}
         {% elif question.species.name == "fill_blank"%}
-        {% include "../species/fill_blank.html" with question=question %}
+        {% include "../species/fill_blanks.html" with question=question %}
         {% endif %}
         <div class="navigation">
           {% comment %}

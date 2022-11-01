@@ -13,7 +13,7 @@ nextBtn.onclick = function () {
     alert("Please select an answer");
     return void 0;
   } else {
-    answer = answer.innerText;
+    answer = answer.innerText || answer.value;
   }
   var data = {
     exam_slug: exam_slug,

@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap"); */
 @import url("root.css");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Poppins, Ubuntu, -apple-system, system-ui, sans-serif, Arial,
+  font-family: Ubuntu, -apple-system, system-ui, sans-serif, Arial,
     BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
     "Open Sans", "Helvetica Neue";
   transition: all 200ms;
@@ -60,17 +60,20 @@ body {
 }
 
 .container .quiz-box .quiz-title {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.2);
   text-align: center;
   font-size: 40px;
   font-weight: bold;
   width: 100%;
   padding: 10px 0;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
   z-index: 5;
+}
+
+.quiz-title.blurred {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   -wbkit-backdrop-filter: blur(10px);
-  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .container .quiz-box .quiz-title.p-relative {
@@ -319,7 +322,7 @@ body {
   background: var(--quiz-onHover-background);
 }
 
-.quiz .navigation button:disabled {
+.quiz .navigation button:disabled, button:disabled {
   cursor: not-allowed !important;
   background: var(--quiz-disabled-button);
 }
@@ -557,6 +560,9 @@ select {
   }
   .quiz-box.focused {
     transform: scale(1) translateY(0) !important;
+  }
+  .quiz-title {
+    font-size: 25px !important;
   }
 }
 

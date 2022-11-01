@@ -26,7 +26,7 @@
         {% for question in questions %}
         <li
           data-answer="{{question.answer}}"
-          class="option {%for i in question.user_answer.all %}{%if result.user.id == i.user.id %}{% if i.answer == question.answer %}correct{% else %}incorrect{%endif%}{%endif%}{% endfor%}"
+          class="option {%for i in question.user_answer.all %}{%if result.user.id == i.user.id %}{% if i.answer == question.answer %}correct{% else %}incorrect{%endif%} {%else%}none{%endif%}{% endfor%}"
         >
           {{question.question}}
         </li>

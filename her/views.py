@@ -17,10 +17,15 @@ SPLITTER = "_"
 
 def welcome(request):
     exams = Exam.objects.filter(private=False)
+    questions = Question.objects.all()
+    print(questions)
     [x.set_quiz_length() for x in exams]
     context = {
         'exams': exams,
     }
+
+    for i in exams:
+        print(i.quizzes_length)
     return render(request, 'her/welcome.html', context)
 
 
