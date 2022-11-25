@@ -166,7 +166,22 @@ def exam_result(request, slug):
 
 
 def login_view(request):
-    pass
+    if request.user.is_authenticated:
+        return redirect("/")
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return JsonResponse({"status": 404, "error": "USER NOT FOUND"})
+        if user.check_password(password):
+            login(request, user)
+        elif user.password == password:
+            login(request, user)
+        else:
+            return JsonResponse({"status": 0, "error": "PASSWORD IS WRONG"})
+    return render(request, 'her/login.html')
 
 
 def register_view(request):

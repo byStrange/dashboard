@@ -22,6 +22,10 @@
         <div class="logout">
           <a href="{% url 'logout' %}">Logout</a>
         </div>
+        {% else %}
+        <div class="login">
+          <a href="{% url 'login' %}" class="button">Login</a>
+        </div>
         {% endif %}
       </div>
     </div>

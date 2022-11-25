@@ -211,6 +211,8 @@ body {
   justify-content: space-between;
 }
 
+
+
 .quiz-box .answers .option:focus {
   color: var(--quiz-option-onHover-color);
   background: var(--quiz-option-onHover-background);
@@ -248,8 +250,8 @@ body {
 }
 
 .button {
-  height: 40px;
-  padding: 0 13px;
+  display: inline-block;
+  padding:13px;
   font-size: 18px;
   font-weight: 400;
   cursor: pointer;
@@ -515,6 +517,10 @@ select {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+[data-answer].option:not(.incorrect, .correct) {
+  display: none !important;
 }
 
 .result-row .side span:not(.text-muted) {

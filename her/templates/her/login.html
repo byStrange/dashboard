@@ -2,29 +2,28 @@
 <div class="container">
   <div class="quiz-box">
     <div class="quiz-title p-relative">
-      <span class="marked">Register</span>
+      <span class="marked">
+        Login
+      </span>
     </div>
     <div class="content">
-      <form>
+      <form method="post">
+        {% csrf_token %}
         <div class="field">
-          <label class="label">Your full name</label>
-          <input type="name" name="name" placeholder="John Doe" required />
+          <label class="label">Username</label>
+          <input type="username" name="username" placeholder="Your username" required />
         </div>
         <div class="field">
-          <label class="label">Pick a new username</label>
-          <input type="name" name="username" placeholder="username" required />
-        </div>
-        <div class="field">
-          <label class="label">Your Email here</label>
+          <label class="label">Password</label>
           <input
-            type="email"
-            name="email"
-            placeholder="example@mail.com"
+            type="password"
+            name="password"
+            placeholder="Your password"
             required
           />
         </div>
         <div class="field">
-            <button class="button">Register</button>
+            <button class="button">Login</button>
         </div>
       </form>
     </div>
@@ -47,5 +46,5 @@
 {% endblock %}
 
 {% block title %}
-    <title>Quiz - Register</title>
+    <title>Quiz - Login</title>
 {% endblock title %}
