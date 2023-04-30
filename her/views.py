@@ -1,16 +1,10 @@
-from re import L
-import re
-from site import USER_BASE
-from turtle import pen
-from unittest import removeResult
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from edit.views import quiz_users
-from her.models import QuizUser, Quiz, QuizOption, QuizType, EditorUser, Exam, Result, UserAnswer
+from her.models import QuizUser, Quiz, QuizOption, Exam, Result, UserAnswer
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from datetime import datetime
-from json import load, loads
+from json import loads
 import requests
 from .config import CHAT_ID, BOT_TOKEN
 CHAT_ID = str(CHAT_ID)
