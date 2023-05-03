@@ -163,7 +163,9 @@ def exam_result(request, slug):
 
 
 def login_view(request):
-    pass
+    if request.user.is_authenticated:
+        return redirect("/my/")
+    return render(request, 'her/login.html')
 
 
 def register_view(request):
