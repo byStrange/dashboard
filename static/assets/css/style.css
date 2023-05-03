@@ -521,4 +521,7 @@ select {
   .quiz-box .answers {
     grid-template-columns: repeat(auto-fill, 100%) !important;
   }
+  .quiz-box .quiz-title {
+    font-size: 30px !important;
+  }
 }
