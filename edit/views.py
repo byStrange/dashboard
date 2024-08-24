@@ -1,4 +1,3 @@
-from re import L
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from her.models import *
@@ -28,6 +27,7 @@ def delete_quiz(request, quiz_id):
 
 @staff_member_required
 def exams(request):
+    
     exams = Exam.objects.all()
     return render(request, 'settings/exams.html', {'exams': exams})
 
